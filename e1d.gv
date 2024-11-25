@@ -9,21 +9,26 @@ edge [dir="both"]
 
 subgraph cluster0 {
   label="Datacenter PC";
-  compt01pia1 [shape=record,label="<host>compt01pia1\nAuerswald|<e1>E1|<s01>S0-1|<s02>S0-2|<s03>S0-3|<s04>S0-4|<s05>S0-5|<s06>S0-6|<s07>S0-7|<s08>S0-8|"];
+  compt01pia1 [shape=record,label="<host>Auerswald|<e1>E1|<s01>S0-1|<s02>S0-2|<s03>S0-3|<s04>S0-4|<s05>S0-5|<s06>S0-6|<s07>S0-7|<s08>S0-8|<ab1>a/b 1|<ab2>a/b 2|<ab3>a/b 3|<ab4>a/b 4|<ab5>a/b 5|<ab6>a/b 6|<ab7>a/b 7|<ab8>a/b 8"];
   //tdm01pia1 [shape=record,label="<host>tdm01pia1\nPacketBand|<e1>E1"];
   tdm02pia1 [shape=record,label="<host>tdm02pia1\nE1D|<e0>E0|<e1>E1"];
 
-  cisco01pia1 [shape=record,label="<host>cisco01pia1\nCisco 2901|<e1>E1|<e2>E2|<e3>E3|<e4>E4"];
+  cisco01pia1 [shape=record,label="<host>cisco01pia1\nCisco 2821|<s000>Ser0/0/0|<s001>Ser0/0/1|<s010>Ser0/0/0|<s011>Ser0/1/1|<bri030>BRI0/3/0|<bri031>BRI0/3/1"];
 
   ras01pia1 [shape=record,label="<host>3Com\nRAS1500"]
-  ras02pia1 [shape=record,label="<host>Lucent\nMAX"]
+  max01pia1 [shape=record,label="<host>Lucent\nMAX 2000"]
 
   r01pia1 [shape=record,label="<host>Cisco\nWIC-BRI"]
-  r02pia1 [shape=record,label="<host>Elsa\nOffice 1100"]
-  modem01pia1 [shape=record,label="modem01pia1\nISDN Modem"];
-  patton01 [shape=record,label="<host>Patton\nSN4600"]
+  r02pia1 [shape=record,label="<host>LANCOM\n1700"]
+
+  modem01pia1 [shape=record,label="Multitech\n56k Modem"];
+
+  tel01pia1 [shape=record,label="Telephone"];
 
 
+  gigaset01pia1 [shape=record,label="Gigaset DECT"];
+
+  itel01pia1 [shape=record,label="Telephone\nISDN"];
 
   subgraph cluster_00 {
   label="External"
@@ -48,32 +53,36 @@ subgraph cluster1 {
   // Service provider
   subgraph cluster_10 {
   label="External"
-//  Telnet [shape=record,label="<host>Telnet|<transit>Transit|<access>Access"];
-//  MinapF [shape=record,label="<host>Minap Telnet|<p01>Port 01|<p02> Port 02|<p03> Port 03"];
 }
 }
 
 subgraph cluster2 {
   label="Leo's Home";
-  compt01pon1 [shape=record,label="<host>compt01pon1\nAuerswald|<e1>E1|<s01>S0-1|<s02>S0-2|<s03>S0-3|<s04>S0-4|<s05>S0-5|<s06>S0-6|<s07>S0-7|<s08>S0-8|<ab1>a/b 1|<ab2>a/b 2|<ab3>a/b 3|<ab4>a/b 4|<ab5>a/b 5|<ab6>a/b 6|<ab7>a/b 7|<ab8>a/b 8"];
+  compt01pon1 [shape=record,label="<host>Auerswald|<e1>E1|<s01>S0-1|<s02>S0-2|<s03>S0-3|<s04>S0-4|<s05>S0-5|<s06>S0-6|<s07>S0-7|<s08>S0-8|<ab1>a/b 1|<ab2>a/b 2|<ab3>a/b 3|<ab4>a/b 4|<ab5>a/b 5|<ab6>a/b 6|<ab7>a/b 7|<ab8>a/b 8"];
   tdm01pon1 [shape=record,label="<host>tdm01pon1\nE1D|<e0>E0|<e1>E1"];
 
-  gigaset01pon1 [shape=record,label="gigaset01pon1\nGigaset DECT"];
-  modem01pon1 [shape=record,label="modem01pon1\nISDN Modem"];
-  r01pon1 [shape=record,label="r01pon1\nZyxel 202H"]
+  gigaset01pon1 [shape=record,label="Gigaset DECT"];
+  r02pon1 [shape=record,label="Zyxel 202H"]
+  r01pon1 [shape=record,label="Elsa\nOffice 1100"]
 
 
   tel01pon1 [shape=record,label="Telephone\nSiemens S62"];
   tel02pon1 [shape=record,label="Telephone\nSiemens S62"];
-  modem02pon1 [shape=record,label="modem02pon1\n56k Modem"];
 
+  itel01pon1 [shape=record,label="Telephone\nISDN"];
+  
+  modem01pon1 [shape=record,label="MAC PowerPC\n38.8k Modem"];
+  modem02pon1 [shape=record,label="MAC 68k\n56k Modem"];
+  modem03pon1 [shape=record,label="Raspberry\n56k Modem"];
+
+  patton01 [shape=record,label="<host>Patton\nSN4600"]
+
+  thinkpad
 
 
   // Service provider
   subgraph cluster_20 {
   label="External"
-//  Telnet [shape=record,label="<host>Telnet|<transit>Transit|<access>Access"];
-//  MinapF [shape=record,label="<host>Minap Telnet|<p01>Port 01|<p02> Port 02|<p03> Port 03"];
 }
 }
 
@@ -87,23 +96,26 @@ subgraph cluster3 {
 
 
 //tdm01mil1:host -- tdm01pia1:host [color=blue]
-tdm02pia1:e0 -- tdm01pon1:host [color=blue]
-tdm02pia1:e1 -- octoihub:host [color=blue]
+tdm02pia1:e1 -- tdm01pon1:e0 [color=blue]
+tdm02pia1:e0 -- octoihub:host [color=blue]
 
 
 //PIA1
-cisco01pia1:e1 -- tdm02pia1:e0
-cisco01pia1:e2 -- tdm02pia1:e1
-cisco01pia1:e3 -- compt01pia1:e1
-cisco01pia1:e4 -- ras02pia1:e1
+cisco01pia1:s000 -- tdm02pia1:e1
+cisco01pia1:s001 -- compt01pia1:e1
+cisco01pia1:s010 -- max01pia1:e1
+cisco01pia1:s011 -- tdm02pia1:e0
 
-compt01pia1:s05 -- ras01pia1 [color=orange]
-compt01pia1:s02 -- r01pia1 [color=orange]
-compt01pia1:s03 -- r02pia1 [color=orange]
-compt01pia1:s04 -- modem01pia1 [color=orange]
 
-compt01pia1:s01 -- patton01 [color=orange]
+//compt01pia1:s01 -- patton01 [color=orange] temporary at PON1
 
+compt01pia1:s05 -- r02pia1 [color=orange]
+compt01pia1:s06 -- itel01pia1 [color=orange]
+compt01pia1:s07 -- r01pia1 [color=orange]
+compt01pia1:s08 -- gigaset01pia1 [color=orange]
+
+compt01pia1:ab1 -- modem01pia1 [color=brown]
+compt01pia1:ab2 -- tel01pia1 [color=brown]
 
 
 //MIL1
@@ -115,12 +127,20 @@ pbx02mil1 -- cnet [color=olivedrab]
 
 //PON
 tdm01pon1:e0 -- compt01pon1:e1
-compt01pon1:s01 -- gigaset01pon1 [color=orange]
-compt01pon1:s02 -- modem01pon1 [color=orange]
-compt01pon1:s03 -- r01pon1 [color=orange]
-compt01pon1:ab1 -- tel01pon1 [color=brown]
-compt01pon1:ab2 -- tel02pon1 [color=brown]
-compt01pon1:ab3 -- modem02pon1 [color=brown]
+
+compt01pon1:s01 -- patton01 [color=orange]
+
+compt01pon1:s05 -- itel01pon1 [color=orange]
+compt01pon1:s06 -- r01pon1 [color=orange]
+compt01pon1:s07 -- r02pon1 [color=orange]
+compt01pon1:s08 -- gigaset01pon1 [color=orange]
+
+compt01pon1:ab1 -- modem01pon1 [color=brown]
+compt01pon1:ab2 -- modem02pon1 [color=brown]
+compt01pon1:ab3 -- thinkpad [color=brown]
+compt01pon1:ab4 -- tel01pon1 [color=brown]
+compt01pon1:ab5 -- tel02pon1 [color=brown]
+compt01pon1:ab6 -- modem03pon1 [color=brown]
 
 
 

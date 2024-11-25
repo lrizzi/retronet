@@ -1,0 +1,54 @@
+All the configuration are made with this in mind:
+0039 as Italy dialing code 
+02 as Milan area code
+XXXX 4 digits subscriber + XXX 3 digits DID 
+
+
+Location: Datacenter Lab PC
+Device:   Cisco 2821 E1 tandem
+0039 + 02 + ---- +
+                 |
+Serial0/0/0:15   + 2000XXX => Routing to Leo's home via icE1usb/line 1 
+Serial0/0/1:15   + 1000XXX => Routing to commander 2 lab
+Serial0/1/0:15   + 4000 + 4000XXX => MAX 2000
+Serial0/1/1:15   + Routing to 0049 + 30 via icE1usb/line 0
+                 | Module 2 allocated to further E1 Mutiflex
+      BRI0/3/0   + 3001 => Test only NT/TE
+      BRI0/3/1   + 3002 => Test only NT/TE allocated for PSTN usage via Patton/SIP Asterisk SBC and C*NET                 
+Internal Cisco   + 5000 => FAX to mail
+
+Device:   Cisco 2901 E1 tandem
+Serial0/0/0:15   + Disconnected
+Serial0/0/1:15   + Disconnected
+      BRI0/3/0   + Disconnected
+      BRI0/3/1   + Disconnected
+
+Device:   Commander Basic 2
+0039 + 02 + 1000 +
+                 |
+   S0 Slot A/5   + 122 => LANCOM 1700 | LANCAPI Win NT4
+   S0 Slot A/6   + 123 => LAB Phone
+   S0 Slot A/7   + 124 => Cisco 1800
+   S0 Slot A/8   + 125 => Gigaset Base
+                 |
+  a/b Slot E/1   + 131 => Multitech V.92 Modem
+           E/2   + 132 => LAB Phone   
+
+Location: Leo's Home
+Device:   Commander Basic 2 
+0039 + 02 + 2000 +
+                 |
+   S0 Slot A/5   + 222 => Phone 
+           A/6   + 223 => Elsa 1100 Office
+           A/7   + 224 => Zyxel 202H
+           A/8   + 225 => Gigaset Base
+                 |
+  a/b Slot E/1   + 231 => GeoPort
+           E/2   + 232 => 56k USR Modem
+           E/3   + 233 => Thinkpad
+           E/4   + 234 => Rotary Analog
+           E/5   + 235 => Rotary Analog
+           E/6   + 236 => USB 56k Modem Raspberry 
+           E/7   + 237 => 
+           E/8   + 238 => 
+
