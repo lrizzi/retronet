@@ -30,6 +30,8 @@ subgraph cluster0 {
 
   itel01pia1 [shape=record,label="Telephone\nISDN"];
 
+  patton01 [shape=record,label="<host>Patton\nSN4600"]
+
   subgraph cluster_00 {
   label="External"
 //  Telnet [shape=record,label="<host>Telnet|<transit>Transit|<access>Access"];
@@ -75,8 +77,6 @@ subgraph cluster2 {
   modem02pon1 [shape=record,label="MAC 68k\n56k Modem"];
   modem03pon1 [shape=record,label="Raspberry\n56k Modem"];
 
-  patton01 [shape=record,label="<host>Patton\nSN4600"]
-
   thinkpad
 
 
@@ -106,6 +106,9 @@ cisco01pia1:s001 -- compt01pia1:e1
 cisco01pia1:s010 -- max01pia1:e1
 cisco01pia1:s011 -- tdm02pia1:e0
 
+cisco01pia1:bri030 -- patton01 [color=orange]
+
+
 
 //compt01pia1:s01 -- patton01 [color=orange] temporary at PON1
 
@@ -128,7 +131,6 @@ pbx02mil1 -- cnet [color=olivedrab]
 //PON
 tdm01pon1:e0 -- compt01pon1:e1
 
-compt01pon1:s01 -- patton01 [color=orange]
 
 compt01pon1:s05 -- itel01pon1 [color=orange]
 compt01pon1:s06 -- r01pon1 [color=orange]
