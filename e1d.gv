@@ -30,7 +30,7 @@ subgraph cluster0 {
 
   itel01pia1 [shape=record,label="Telephone\nISDN"];
 
-  patton01 [shape=record,label="<host>Patton\nSN4600"]
+  patton01 [shape=record,label="<host>Patton\nSN4600|<bri00>BRI 0/0|<bri01>BRI 0/1|<bri02>BRI 0/2"]
 
   subgraph cluster_00 {
   label="External"
@@ -106,7 +106,7 @@ cisco01pia1:s001 -- compt01pia1:e1
 cisco01pia1:s010 -- max01pia1:e1
 cisco01pia1:s011 -- tdm02pia1:e0
 
-cisco01pia1:bri030 -- patton01 [color=orange]
+cisco01pia1:bri030 -- patton01:bri00 [color=orange]
 
 
 
