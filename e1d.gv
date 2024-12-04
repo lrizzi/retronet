@@ -46,7 +46,7 @@ subgraph cluster1 {
   
   //r01mil1 [shape=record,label="<host>Cisco\nWIC-BRI"]
   //patton01mil1 [shape=record,label="<host>Patton\nSmartNode"]
-  pbx02mil1 [shape=record,label="<host>Asterisk\nSmartNode"]
+  pbx02mil1 [shape=record,label="<host>Asterisk"]
 
   cnet [shape=record,label="<host>C*NET"]
 
