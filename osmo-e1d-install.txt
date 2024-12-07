@@ -1,0 +1,8 @@
+#It's just a quick memo on how to install the osmo-e1d on Debian
+
+echo "deb https://downloads.osmocom.org/packages/osmocom:/latest/Debian_12/ ./" > /etc/apt/sources.list.d/osmocom-latest.list
+wget https://downloads.osmocom.org/packages/osmocom:/latest/Debian_12/Release.key
+apt-key add Release.key
+rm Release.key
+apt update
+apt install osmo-e1d
