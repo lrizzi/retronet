@@ -5,15 +5,20 @@ dial-peer voice 1 pots
  translation-profile outgoing unknown-isdn
  incoming called-number .
 
-dial-peer voice 9 pots
- translation-profile outgoing profile5
- destination-pattern 9.
- no digit-strip
+dial-peer voice 16 pots
+ translation-profile outgoing unknown-isdn
+ destination-pattern 026.T
+ port 0/3/0
+ forward-digits all
+
+ dial-peer voice 17 pots
+ translation-profile outgoing unknown-isdn
+ destination-pattern 39026.T
  port 0/3/0
  forward-digits all
 
 dial-peer voice 49 pots
- translation-profile outgoing profile3
+ translation-profile outgoing trunk-octoi-de
  destination-pattern 0049.
  supplementary-service pass-through
  no digit-strip

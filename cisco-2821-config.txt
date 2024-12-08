@@ -1,0 +1,432 @@
+!
+! Last configuration change at 22:08:53 UTC Sun Dec 8 2024 by leo
+! NVRAM config last updated at 22:10:43 UTC Sun Dec 8 2024 by leo
+! NVRAM config last updated at 22:10:43 UTC Sun Dec 8 2024 by leo
+version 15.1
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname C2821LAB
+!
+boot-start-marker
+boot system flash c2800nm-adventerprisek9_ivs-mz.151-4.M12a.bin
+boot-end-marker
+!
+!
+!
+aaa new-model
+!
+!
+!
+!
+!
+!
+!
+aaa session-id common
+!
+network-clock-participate wic 0
+network-clock-participate wic 1
+network-clock-participate wic 3
+network-clock-select 1 E1 0/0/0
+network-clock-select 2 E1 0/1/1
+!
+crypto pki token default removal timeout 0
+!
+!
+dot11 syslog
+ip source-route
+!
+!
+ip cef
+!
+!
+!
+ip domain name retro.wide-net.org
+ip name-server 185.78.48.35
+ip name-server 185.78.48.40
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+!
+isdn switch-type primary-net5
+!
+!
+!
+voice service pots
+ no direct-inward-dial isdn
+!
+voice service voip
+ allow-connections h323 to h323
+ allow-connections h323 to sip
+ allow-connections sip to h323
+ allow-connections sip to sip
+ redirect ip2ip
+ signaling forward unconditional
+ sip
+  bearer-capability clear-channel audio
+!
+!
+!
+!
+voice translation-rule 1
+ rule 1 /^2000/ /2&/ type any national plan any isdn
+ rule 2 /^1000/ /2&/ type any national plan any isdn
+!
+voice translation-rule 2
+ rule 1 /^2000/ /&/ type any unknown plan any isdn
+ rule 2 /^1000/ /&/ type any unknown plan any isdn
+!
+voice translation-rule 3
+ rule 1 /^0039+/ /39/
+ rule 2 // /3902/ type subscriber international plan any isdn
+!
+voice translation-rule 4
+ rule 1 /^0049+/ /49/ type any international plan any isdn
+!
+voice translation-rule 5
+ rule 1 /^0039+/ /39/
+!
+voice translation-rule 6
+ rule 1 /^3902/ // type any unknown plan any isdn
+!
+voice translation-rule 7
+ rule 1 // // type any unknown plan any isdn
+!
+voice translation-rule 8
+ rule 1 // /55555555555555555555/ type any unknown plan any isdn
+!
+voice translation-rule 9
+ rule 1 // /6666666666666666666/ type any unknown plan any isdn
+!
+voice translation-rule 10
+ rule 1 /^0+/ // type any national plan any isdn
+!
+voice translation-rule 11
+ rule 1 // /02/ type subscriber national plan any isdn
+ rule 2 /^00+/ // type unknown international plan any isdn
+!
+voice translation-rule 12
+ rule 1 /^3902/ /2/ type international national plan any isdn
+ rule 2 // // type any international plan any isdn
+!
+voice translation-rule 13
+ rule 1 // /02/ type subscriber national plan any isdn
+ rule 2 /^00+/ // type unknown international plan any isdn
+!
+voice translation-rule 14
+ rule 1 /^026/ /026/ type any national plan any isdn
+!
+!
+voice translation-profile debug
+ translate calling 9
+ translate called 8
+!
+voice translation-profile int-subscriber-prefix
+ translate calling 13
+ translate called 12
+!
+voice translation-profile local-subscriber-prefix
+ translate calling 11
+ translate called 10
+!
+voice translation-profile profile1
+ translate calling 1
+ translate called 1
+!
+voice translation-profile profile2
+ translate calling 2
+ translate called 2
+!
+voice translation-profile profile4
+ translate called 6
+!
+voice translation-profile trunk-asterisk-int
+!
+voice translation-profile trunk-asterisk-national
+ translate calling 11
+ translate called 14
+!
+voice translation-profile trunk-octoi-de
+ translate calling 3
+ translate called 4
+!
+voice translation-profile unknown-isdn
+ translate calling 7
+ translate called 7
+!
+!
+voice-card 0
+ dspfarm
+!
+fax receive called-subscriber $d$
+mta send server 192.168.26.151 port 25
+mta send subject Fax-Mail Message
+mta send with-subject both
+mta send mail-from hostname retro.wide-net.org
+mta send mail-from username fax
+!
+application
+ service on-ramp flash:/app_faxmail_onramp.2.0.1.3.tcl
+  param accounting-list fax
+  param authen-list fax
+  param authen-method gateway
+ !
+!
+!
+!
+license udi pid CISCO2821 sn FCZ100172YH
+username leo privilege 15 
+!
+redundancy
+!
+!
+controller E1 0/0/0
+ pri-group timeslots 1-10,16
+!
+controller E1 0/0/1
+ clock source internal
+ pri-group timeslots 1-10,16
+!
+controller E1 0/1/0
+ clock source internal
+ pri-group timeslots 1-12,16
+!
+controller E1 0/1/1
+ pri-group timeslots 1-8,16
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface GigabitEthernet0/0
+ ip address 10.255.250.102 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0:15
+ description PBX: PON 2000
+ no ip address
+ encapsulation hdlc
+ isdn switch-type primary-net5
+ isdn protocol-emulate network
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ no cdp enable
+!
+interface Serial0/0/1:15
+ description PBX: PIA1 1000
+ no ip address
+ encapsulation hdlc
+ isdn switch-type primary-net5
+ isdn protocol-emulate network
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ no cdp enable
+!
+interface Serial0/1/0:15
+ description RAS: PIA1 4000
+ no ip address
+ encapsulation hdlc
+ isdn switch-type primary-net5
+ isdn protocol-emulate network
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ no cdp enable
+!
+interface Serial0/1/1:15
+ description TRUNK: OCTOI
+ no ip address
+ encapsulation hdlc
+ isdn switch-type primary-net5
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ no cdp enable
+!
+interface BRI0/3/0
+ description TRUNK: ASTERISK
+ no ip address
+ isdn switch-type basic-net3
+ isdn overlap-receiving
+ isdn point-to-point-setup
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ isdn skipsend-idverify
+!
+interface BRI0/3/1
+ no ip address
+ isdn switch-type basic-net3
+ isdn protocol-emulate network
+ isdn layer1-emulate network
+ isdn incoming-voice voice
+ isdn map address .* plan isdn type unknown
+ isdn calling-number 3002
+ isdn skipsend-idverify
+!
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+!
+ip route 0.0.0.0 0.0.0.0 10.255.250.250
+!
+logging trap debugging
+logging 10.255.250.103
+!
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+voice-port 0/0/0:15
+ cptone IT
+!
+voice-port 0/1/0:15
+ cptone IT
+!
+voice-port 0/0/1:15
+ cptone IT
+!
+voice-port 0/1/1:15
+ cptone IT
+!
+voice-port 0/3/0
+ compand-type a-law
+ cptone IT
+!
+voice-port 0/3/1
+ compand-type a-law
+ cptone IT
+!
+!
+!
+mgcp profile default
+!
+!
+dial-peer voice 49 pots
+ translation-profile outgoing trunk-octoi-de
+ destination-pattern 0049.
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/1:15
+ forward-digits all
+!
+dial-peer voice 1000 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 021000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/1:15
+ forward-digits all
+!
+dial-peer voice 1005 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 022000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/0:15
+ forward-digits all
+!
+dial-peer voice 1010 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 024000
+ supplementary-service pass-through
+ port 0/1/0:15
+!
+dial-peer voice 1011 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 024000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/0:15
+ forward-digits all
+!
+dial-peer voice 2000 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39021000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/1:15
+ forward-digits all
+!
+dial-peer voice 2005 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39022000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/0:15
+ forward-digits all
+!
+dial-peer voice 2010 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39024000
+ supplementary-service pass-through
+ port 0/1/0:15
+!
+dial-peer voice 2011 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39024000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/0:15
+ forward-digits all
+!
+dial-peer voice 16 pots
+ translation-profile outgoing trunk-asterisk-national
+ destination-pattern 026.T
+ port 0/3/0
+ forward-digits all
+!
+dial-peer voice 17 pots
+ translation-profile outgoing unknown-isdn
+ destination-pattern 39026.T
+ port 0/3/0
+ forward-digits all
+!
+dial-peer voice 1 pots
+ translation-profile incoming unknown-isdn
+ translation-profile outgoing unknown-isdn
+ incoming called-number .
+!
+!
+!
+!
+gatekeeper
+ shutdown
+!
+!
+!
+line con 0
+line aux 0
+line vty 0 4
+ exec-timeout 30 0
+ privilege level 15
+ transport input all
+!
+scheduler allocate 20000 1000
+ntp server ntp1.ien.it
+ntp server ntp2.ien.it
+end

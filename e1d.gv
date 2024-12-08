@@ -49,6 +49,7 @@ subgraph cluster1 {
   pbx02mil1 [shape=record,label="<host>Asterisk"]
 
   cnet [shape=record,label="<host>C*NET"]
+  pstn [shape=record,label="<host>PSTN"]
 
 
 
@@ -125,8 +126,9 @@ compt01pia1:ab2 -- tel01pia1 [color=brown]
 //tdm01mil1:e1 -- compt01mil1:e1 
 //compt01mil1:s01 -- r01mil1 [color=orange]
 //compt01mil1:s02 -- patton01mil1 [color=orange]
-patton01 -- pbx02mil1 [color=olivedrab]
+patton01:host -- pbx02mil1 [color=olivedrab]
 pbx02mil1 -- cnet [color=olivedrab]
+pbx02mil1 -- pstn [color=olivedrab]
 
 //PON
 tdm01pon1:e0 -- compt01pon1:e1

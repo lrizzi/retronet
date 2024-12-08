@@ -8,22 +8,23 @@ voice translation-rule 2
  rule 1 /^2000/ /&/ type any unknown plan any isdn
  rule 2 /^1000/ /&/ type any unknown plan any isdn
 !
-! This add 3902 to any number, it's a kind of lazy solution because the PBXes are configured with the DID without local prefix (to be fixed)
+! Rule 1 add 3902 to any number, it's a kind of lazy solution because the PBXes are configured with the DID without local prefix (to be fixed)
 voice translation-rule 3
  rule 1 /^.*/ /3902&/
 !
-! This remove 00 from/to the calling 0049.
+! Rule 1 remove 00 from/to the calling 0049.
 voice translation-rule 4
  rule 1 /^0049+/ /49/
 !
-! This remove 00 from 0039 in a bad way.
+! Rule 1 remove 00 from 0039 in a bad way.
 voice translation-rule 5
  rule 1 /^0039+/ /39/
 !
+! Rule 1 set type to unknown if prefix is 3902
 voice translation-rule 6
  rule 1 /^3902/ // type any unknown plan any isdn
 !
-!This change anything to unknown
+! Rule 1 change anything to unknown
 voice translation-rule 7
  rule 1 // // type any unknown plan any isdn 
 !
@@ -54,6 +55,10 @@ voice translation-rule 13
 ! rule 1 // /02/ type subscriber national plan any isdn
 ! rule 2 /^00+/ // type unknown international plan any isdn
 !
+! Rule 1 set type to national if it start with 026 (future use with the Patton)
+voice translation-rule 14
+rule 1 /^026/ /026/ type any national plan any isdn
+!
 ! This set type unknown plan isdn to anything start with 1000 or 2000 and add 2 prefix to any call
 voice translation-profile profile1
  translate calling 1
@@ -68,6 +73,15 @@ voice translation-profile profile2
 voice translation-profile debug
  translate calling 9
  translate called 8
+!
+! Add 02 prefix to local subscriber and set type national and set called to type national too
+voice translation-profile trunk-asterisk-national
+ translate calling 11
+ translate called 14
+!
+! It's the same as trunk-asterisk-national but added the prefix (it's a lazy solution)
+voice translation-profile trunk-asterisk-int
+TBD
 !
 ! This change anything to unknown
 voice translation-profile unknown-isdn
@@ -90,3 +104,5 @@ voice translation-profile local-subscriber-prefix
 voice translation-profile int-subscriber-prefix
  translate calling 13
  translate called 12
+
+

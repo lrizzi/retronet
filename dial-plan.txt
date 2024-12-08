@@ -3,6 +3,7 @@ All the configuration are made with this in mind:
 02 as Milan area code
 XXXX 4 digits subscriber + XXX 3 digits DID 
 
+!!!!! The 0 in the 02 prefix is a significant digit you must dial it !!!!!
 
 Location: Datacenter Lab PC
 Device:   Cisco 2821 E1 tandem
@@ -11,10 +12,10 @@ Device:   Cisco 2821 E1 tandem
 Serial0/0/0:15   + 2000XXX => Routing to Leo's home via icE1usb/line 1 
 Serial0/0/1:15   + 1000XXX => Routing to commander 2 lab
 Serial0/1/0:15   + 4000 + 4000XXX => MAX 2000
-Serial0/1/1:15   + Routing to 0049 + 30 via icE1usb/line 0
+Serial0/1/1:15   + Routing to 0049 via icE1usb/line 0
                  | Module 2 allocated to further E1 Mutiflex
-      BRI0/3/0   + 3001 => Test only NT/TE
-      BRI0/3/1   + 3002 => Test only NT/TE allocated for PSTN usage via Patton/SIP Asterisk SBC and C*NET                 
+      BRI0/3/0   + NT/TE => Patton/SIP Asterisk SBC and C*NET 
+      BRI0/3/1   + 3002 =>                
 Internal Cisco   + 5000 => FAX to mail
 
 Device:   Cisco 2901 E1 tandem
@@ -51,4 +52,13 @@ Device:   Commander Basic 2
            E/6   + 236 => USB 56k Modem Raspberry 
            E/7   + 237 => 
            E/8   + 238 => 
+
+Location: Datacenter MI
+Device: Asterisk (connected to BRI Patton)
+0039 + 02 + 6 +
+              |
+              + 000 Time Italian
+              + 001 Time English
+              + 002 Your caller ID Number
+              + 003 Your caller ID Name
 
