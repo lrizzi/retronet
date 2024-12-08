@@ -1,0 +1,86 @@
+! 1-999 Incoming and Routing
+
+dial-peer voice 1 pots
+ translation-profile incoming unknown-isdn
+ translation-profile outgoing unknown-isdn
+ incoming called-number .
+
+dial-peer voice 9 pots
+ translation-profile outgoing profile5
+ destination-pattern 9.
+ no digit-strip
+ port 0/3/0
+ forward-digits all
+
+dial-peer voice 49 pots
+ translation-profile outgoing profile3
+ destination-pattern 0049.
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/1:15
+ forward-digits all
+
+! 1000-1999 National (Subscriber)
+
+dial-peer voice 1000 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 021000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/1:15
+ forward-digits all
+
+dial-peer voice 1005 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 022000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/0:15
+ forward-digits all
+
+dial-peer voice 1010 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 024000
+ supplementary-service pass-through
+ port 0/1/0:15
+
+dial-peer voice 1011 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 024000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/0:15
+ forward-digits all
+
+
+! 2000-2999 Intenational (Subscriber)
+
+dial-peer voice 2000 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39021000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/1:15
+ forward-digits all
+
+dial-peer voice 2005 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39022000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/0:15
+ forward-digits all
+
+dial-peer voice 2010 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39024000
+ supplementary-service pass-through
+ port 0/1/0:15
+
+dial-peer voice 2011 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39024000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/0:15
+ forward-digits all

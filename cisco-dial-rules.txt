@@ -1,0 +1,92 @@
+! This set type unknown plan isdn to anything start with 1000 or 2000 and add 2 prefix (I don't know why I made this)
+voice translation-rule 1
+ rule 1 /^2000/ /2&/ type any national plan any isdn
+ rule 2 /^1000/ /2&/ type any national plan any isdn
+!
+! This set type unknown plan isdn to anything start with 1000 or 2000
+voice translation-rule 2
+ rule 1 /^2000/ /&/ type any unknown plan any isdn
+ rule 2 /^1000/ /&/ type any unknown plan any isdn
+!
+! This add 3902 to any number, it's a kind of lazy solution because the PBXes are configured with the DID without local prefix (to be fixed)
+voice translation-rule 3
+ rule 1 /^.*/ /3902&/
+!
+! This remove 00 from/to the calling 0049.
+voice translation-rule 4
+ rule 1 /^0049+/ /49/
+!
+! This remove 00 from 0039 in a bad way.
+voice translation-rule 5
+ rule 1 /^0039+/ /39/
+!
+voice translation-rule 6
+ rule 1 /^3902/ // type any unknown plan any isdn
+!
+!This change anything to unknown
+voice translation-rule 7
+ rule 1 // // type any unknown plan any isdn 
+!
+! This add a bunch of 5 for debug purpose
+voice translation-rule 8
+ rule 1 // /55555555555555555555/ type any unknown plan any isdn
+!
+! This add a bunch of 6 for debug purpose
+voice translation-rule 9
+ rule 1 // /6666666666666666666/ type any unknown plan any isdn 
+!
+! Rule 1 remove 0 of the prefix and set to national (this simulate an ISDN access and can be understood by the PBX)
+voice translation-rule 10
+ rule 1 /^0+/ // type any national plan any isdn
+!
+! Rule 1 if type is subscriber probably don't have the national prefix, so add it and change the type to national
+! Rule 2 if the caller type is unknown and start with 00, it's probably an international number remove the 00 and change to type Internal
+voice translation-rule 11
+ rule 1 // /02/ type subscriber national plan any isdn
+ rule 2 /^00+/ // type unknown international plan any isdn
+!
+! Rule 1 remove prefix if type is international and convert to national for subscriber
+voice translation-rule 12
+ rule 1 /^3902/ /2/ type international national plan any isdn
+!
+! Not matched just a place holder
+voice translation-rule 13
+! rule 1 // /02/ type subscriber national plan any isdn
+! rule 2 /^00+/ // type unknown international plan any isdn
+!
+! This set type unknown plan isdn to anything start with 1000 or 2000 and add 2 prefix to any call
+voice translation-profile profile1
+ translate calling 1
+ translate called 1
+!
+! This set type unknown plan isdn to anything start with 1000 or 2000 to any call
+voice translation-profile profile2
+ translate calling 2
+ translate called 2
+!
+! This is for debug: add a bunch of 5 and 6
+voice translation-profile debug
+ translate calling 9
+ translate called 8
+!
+! This change anything to unknown
+voice translation-profile unknown-isdn
+ translate calling 7
+ translate called 7
+!
+! This is to apply for the +49 trunk to OCTOI
+! This add 3902 to any numbers
+! This remove 00 to 0049 numbers
+voice translation-profile trunk-octoi-de
+ translate calling 3
+ translate called 4 
+! 
+! This is to apply to any National dial-peer
+voice translation-profile local-subscriber-prefix
+ translate calling 11
+ translate called 10
+!
+! This is to apply to any International dial-peer
+voice translation-profile int-subscriber-prefix
+ translate calling 13
+ translate called 12
