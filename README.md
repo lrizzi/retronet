@@ -4,7 +4,7 @@ This is a really convoluted and inefficent way to build an ISDN network using Ci
 
 Here you can fine the Dial Plan [here](dial-plan.txt)
 
-There also a PSTN gateway if intereset let me know.
+There also a PSTN gateway if interested let me know.
 
 ![Alt text](e1d.png?raw=true "RetroNet TDM")
 

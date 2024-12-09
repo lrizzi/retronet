@@ -61,4 +61,5 @@ Device: Asterisk (connected to BRI Patton)
               + 001 Time English
               + 002 Your caller ID Number
               + 003 Your caller ID Name
+              + 004 Milliwatt
 
