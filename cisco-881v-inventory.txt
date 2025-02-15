@@ -1,0 +1,6 @@
+C881V#sh inventory
+NAME: "881-V", DESCR: "881-V chassis, Hw Serial#: FCZ2002C0EE, Hw Revision: 1.0"
+PID: C881-V-K9         , VID: V01, SN: FCZ2002C0EE
+
+NAME: "PVDMII DSP SIMM with one DSP on Motherboard", DESCR: "PVDMII DSP SIMM with one DSP on Motherboard"
+PID: PVDM2-16          , VID: V01 , SN: FOC19458DQQ

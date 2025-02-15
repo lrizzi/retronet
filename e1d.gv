@@ -14,9 +14,17 @@ subgraph cluster0 {
   tdm02pia1 [shape=record,label="<host>tdm02pia1\nE1D|<e0>E0|<e1>E1"];
 
   cisco01pia1 [shape=record,label="<host>cisco01pia1\nCisco 2821|<s000>Ser0/0/0|<s001>Ser0/0/1|<s010>Ser0/0/0|<s011>Ser0/1/1|<bri030>BRI0/3/0|<bri031>BRI0/3/1"];
+  cisco02pia1 [shape=record,label="<host>cisco02pia1\nCisco 2921|<s000>Ser0/0/0|<s001>Ser0/0/1|<s002>Ser0/0/2|<s003>Ser0/0/3|<s010>Ser0/1/0|<s011>Ser0/1/1|<s012>Ser0/1/2|<s013>Ser0/1/3|<bri030>BRI0/3/0|<bri031>BRI0/3/1"];
+
+  cisco03pia1 [shape=record,label="<host>cisco03pia1\nCisco 881V|<bri1>BRI1|<bri2>BRI2|<fxs3>FXS3|<fxs4>FXS4|<fxs5>FXS5|<fxs6>FXS6|<fxo7>FXO7"];
+
 
   ras01pia1 [shape=record,label="<host>3Com\nRAS1500"]
   max01pia1 [shape=record,label="<host>Lucent\nMAX 2000"]
+  max02pia1 [shape=record,label="<host>Lucent\nMAX 6000"]
+  tandberg01 [shape=record,label="<host>Tandberg\nMXP"]
+
+  tsrv01 [shape=record,label="<host>Cyclades\nAlterPath"]
 
   r01pia1 [shape=record,label="<host>Cisco\nWIC-BRI"]
   r02pia1 [shape=record,label="<host>LANCOM\n1700"]
@@ -24,6 +32,9 @@ subgraph cluster0 {
   modem01pia1 [shape=record,label="Multitech\n56k Modem"];
 
   tel01pia1 [shape=record,label="Telephone"];
+
+  win2000 [shape=record,label="Windows 2000 RVS"];
+  yate01 [shape=record,label="Yate Test"];
 
 
   gigaset01pia1 [shape=record,label="Gigaset DECT"];
@@ -50,8 +61,6 @@ subgraph cluster1 {
 
   cnet [shape=record,label="<host>C*NET"]
   pstn [shape=record,label="<host>PSTN"]
-
-
 
   // Service provider
   subgraph cluster_10 {
@@ -100,14 +109,20 @@ subgraph cluster3 {
 tdm02pia1:e1 -- tdm01pon1:e0 [color=blue]
 tdm02pia1:e0 -- octoihub:host [color=blue]
 
+//PIA1 E1 Switch
+cisco02pia1:s000 -- tdm02pia1:e1
+cisco02pia1:s001 -- compt01pia1:e1
+cisco02pia1:s002 -- max01pia1:e1
+cisco02pia1:s003 -- tdm02pia1:e0
+cisco02pia1:s010 -- cisco01pia1:s000
+cisco02pia1:s011 -- max02pia1
+cisco02pia1:s012 -- tandberg01
+cisco02pia1:s013 -- yate01
 
-//PIA1
-cisco01pia1:s000 -- tdm02pia1:e1
-cisco01pia1:s001 -- compt01pia1:e1
-cisco01pia1:s010 -- max01pia1:e1
-cisco01pia1:s011 -- tdm02pia1:e0
 
-cisco01pia1:bri030 -- patton01:bri00 [color=orange]
+
+
+cisco02pia1:bri030 -- patton01:bri00 [color=orange]
 
 
 
@@ -121,11 +136,19 @@ compt01pia1:s08 -- gigaset01pia1 [color=orange]
 compt01pia1:ab1 -- modem01pia1 [color=brown]
 compt01pia1:ab2 -- tel01pia1 [color=brown]
 
+compt01pia1:s04 -- win2000 [color=orange]
+compt01pia1:ab3 -- win2000 [color=brown]
+
+compt01pia1:s02 -- cisco03pia1:bri1 [color=orange]
+
+compt01pia1:s03 -- tsrv01 [color=orange]
+
 
 //MIL1
 //tdm01mil1:e1 -- compt01mil1:e1 
 //compt01mil1:s01 -- r01mil1 [color=orange]
 //compt01mil1:s02 -- patton01mil1 [color=orange]
+cisco01pia1:host -- pbx02mil1 [color=olivedrab]
 patton01:host -- pbx02mil1 [color=olivedrab]
 pbx02mil1 -- cnet [color=olivedrab]
 pbx02mil1 -- pstn [color=olivedrab]

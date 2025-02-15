@@ -1,0 +1,189 @@
+!
+version 15.4
+no service pad
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname C881V
+!
+boot-start-marker
+boot system flash c880voice-universalk9-mz.154-3.M10.bin
+boot-end-marker
+!
+!
+!
+aaa new-model
+!
+!
+!
+!
+!
+!
+!
+aaa session-id common
+network-clock-participate wic 0
+network-clock-select 1 BRI1
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+!
+!
+!
+!
+multilink bundle-name authenticated
+!
+isdn switch-type basic-net3
+!
+!
+!
+!
+!
+!
+voice-card 0
+!
+license udi pid C881-V-K9 sn FCZ2002C0EE
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface BRI1
+ no ip address
+ isdn switch-type basic-net3
+ isdn point-to-point-setup
+ isdn incoming-voice voice
+!
+interface BRI2
+ no ip address
+ isdn switch-type basic-net3
+ isdn protocol-emulate network
+ isdn layer1-emulate network
+ isdn incoming-voice voice
+ isdn skipsend-idverify
+!
+interface FastEthernet0
+ no ip address
+!
+interface FastEthernet1
+ no ip address
+!
+interface FastEthernet2
+ no ip address
+!
+interface FastEthernet3
+ no ip address
+!
+interface FastEthernet4
+ ip address dhcp
+ duplex auto
+ speed auto
+!
+interface Vlan1
+ no ip address
+!
+ip forward-protocol nd
+ip http server
+ip http authentication local
+no ip http secure-server
+!
+!
+!
+!
+!
+!
+!
+control-plane
+!
+!
+voice-port 1
+ compand-type a-law
+ cptone IT
+!
+voice-port 2
+ compand-type a-law
+ cptone IT
+!
+voice-port 3
+ cptone IT
+!
+voice-port 4
+ cptone IT
+!
+voice-port 5
+ cptone IT
+!
+voice-port 6
+ cptone IT
+!
+voice-port 7
+ cptone IT
+ impedance complex2
+!
+mgcp behavior rsip-range tgcp-only
+mgcp behavior comedia-role none
+mgcp behavior comedia-check-media-src disable
+mgcp behavior comedia-sdp-force disable
+!
+mgcp profile default
+!
+!
+!
+!
+dial-peer voice 11001 pots
+ destination-pattern 0211001
+ port 3
+!
+dial-peer voice 11002 pots
+ destination-pattern 0211002
+ port 4
+!
+dial-peer voice 11003 pots
+ destination-pattern 0211003
+ port 5
+!
+dial-peer voice 11004 pots
+ destination-pattern 0211004
+ port 6
+!
+dial-peer voice 1 pots
+ preference 10
+ destination-pattern .T
+ port 7
+!
+!
+!
+line con 0
+ no modem enable
+line aux 0
+line vty 0
+ exec-timeout 120 0
+ privilege level 15
+ transport input all
+line vty 1 4
+ transport input all
+!
+!
+end

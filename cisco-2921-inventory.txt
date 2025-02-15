@@ -1,0 +1,18 @@
+C2911LAB#sh inventory
+NAME: "CISCO2911/K9", DESCR: "CISCO2911/K9 chassis, Hw Serial#: FCZ135071PM, Hw Revision: 1.0"
+PID: CISCO2911/K9      , VID: V01 , SN: FCZ135071PM
+
+NAME: "VWIC3-4MFT-T1/E1 - 4-Port RJ-48 Multiflex Trunk - T1/E1 on Slot 0 SubSlot 0", DESCR: "VWIC3-4MFT-T1/E1 - 4-Port RJ-48 Multiflex Trunk - T1/E1"
+PID: VWIC3-4MFT-T1/E1  , VID: V01 , SN: FOC1634C05M
+
+NAME: "VWIC3-4MFT-T1/E1 - 4-Port RJ-48 Multiflex Trunk - T1/E1 on Slot 0 SubSlot 1", DESCR: "VWIC3-4MFT-T1/E1 - 4-Port RJ-48 Multiflex Trunk - T1/E1"
+PID: VWIC3-4MFT-T1/E1  , VID: V01 , SN: FOC16360PVA
+
+NAME: "2nd generation two port BRI voice interface daughtercard on Slot 0 SubSlot 3", DESCR: "2nd generation two port BRI voice interface daughtercard"
+PID: VIC2-2BRI-NT/TE   , VID: V03 , SN: FOC181856MK
+
+NAME: "PVDM3 DSP DIMM with 256 Channels on Slot 0 SubSlot 4", DESCR: "PVDM3 DSP DIMM with 256 Channels"
+PID: PVDM3-256         , VID: V01 , SN: FOC17423YVH
+
+NAME: "C2911 AC Power Supply", DESCR: "C2911 AC Power Supply"
+PID: PWR-2911-AC       , VID: V01 , SN: AZS134711LH

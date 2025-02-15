@@ -1,0 +1,24 @@
+C2821LAB#sh inventory
+NAME: "2821 chassis", DESCR: "2821 chassis"
+PID: CISCO2821         , VID: V01 , SN: FCZ100172YH
+
+NAME: "Two port E1 voice interface daughtercard on Slot 0 SubSlot 0", DESCR: "Two port E1 voice interface daughtercard"
+PID: VWIC-2MFT-E1=     , VID: 1.0, SN: 31084561
+
+NAME: "Two port E1 voice interface daughtercard on Slot 0 SubSlot 1", DESCR: "Two port E1 voice interface daughtercard"
+PID: VWIC-2MFT-E1=     , VID: 1.0, SN: 33510801
+
+NAME: "2nd generation two port BRI voice interface daughtercard on Slot 0 SubSlot 3", DESCR: "2nd generation two port BRI voice interface daughtercard"
+PID: VIC2-2BRI-NT/TE   , VID: V01 , SN: FOC1047299M
+
+NAME: "PVDMII DSP SIMM with one DSP on Slot 0 SubSlot 4", DESCR: "PVDMII DSP SIMM with one DSP"
+PID: PVDM2-16          , VID: V01 , SN: FOC14132XS2
+
+NAME: "PVDMII DSP SIMM with one DSP on Slot 0 SubSlot 5", DESCR: "PVDMII DSP SIMM with one DSP"
+PID: PVDM2-16          , VID: V01 , SN: FOC10354ZHT
+
+NAME: "PVDMII DSP SIMM with one DSP on Slot 0 SubSlot 6", DESCR: "PVDMII DSP SIMM with one DSP"
+PID: PVDM2-16          , VID: V01 , SN: FOC143555KV
+
+NAME: "Virtual Private Network (VPN) Module on Slot 0", DESCR: "Encryption AIM Element"
+PID: AIM-VPN/SSL-2     , VID: V01, SN: FOC11170S0P

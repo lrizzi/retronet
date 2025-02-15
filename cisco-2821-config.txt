@@ -1,7 +1,5 @@
 !
-! Last configuration change at 22:08:53 UTC Sun Dec 8 2024 by leo
-! NVRAM config last updated at 22:10:43 UTC Sun Dec 8 2024 by leo
-! NVRAM config last updated at 22:10:43 UTC Sun Dec 8 2024 by leo
+! No configuration change since last restart
 version 15.1
 service timestamps debug datetime msec
 service timestamps log datetime msec
@@ -29,7 +27,6 @@ network-clock-participate wic 0
 network-clock-participate wic 1
 network-clock-participate wic 3
 network-clock-select 1 E1 0/0/0
-network-clock-select 2 E1 0/1/1
 !
 crypto pki token default removal timeout 0
 !
@@ -55,6 +52,7 @@ multilink bundle-name authenticated
 isdn switch-type primary-net5
 !
 !
+voice rtp send-recv
 !
 voice service pots
  no direct-inward-dial isdn
@@ -64,10 +62,23 @@ voice service voip
  allow-connections h323 to sip
  allow-connections sip to h323
  allow-connections sip to sip
+ supplementary-service h450.12
+ no supplementary-service sip moved-temporarily
+ no supplementary-service sip refer
  redirect ip2ip
  signaling forward unconditional
+ h323
+  call preserve
  sip
+  bind control source-interface GigabitEthernet0/0
+  bind media source-interface GigabitEthernet0/0
+  header-passing
+  registrar server expires max 250 min 200
   bearer-capability clear-channel audio
+  no call service stop
+!
+voice class sip-profiles 1
+ request INVITE sip-header From modify "<sip:anonymous@" "<sip:0000000000@"
 !
 !
 !
@@ -179,25 +190,20 @@ application
 !
 !
 license udi pid CISCO2821 sn FCZ100172YH
-username leo privilege 15 
 !
 redundancy
 !
 !
 controller E1 0/0/0
- pri-group timeslots 1-10,16
+ pri-group timeslots 1-20
 !
 controller E1 0/0/1
- clock source internal
- pri-group timeslots 1-10,16
 !
 controller E1 0/1/0
- clock source internal
- pri-group timeslots 1-12,16
 !
 controller E1 0/1/1
- pri-group timeslots 1-8,16
 !
+gw-accounting syslog
 !
 !
 !
@@ -218,43 +224,11 @@ interface GigabitEthernet0/1
  speed auto
 !
 interface Serial0/0/0:15
- description PBX: PON 2000
+ description TRUNK: ASTERISK
  no ip address
  encapsulation hdlc
  isdn switch-type primary-net5
  isdn protocol-emulate network
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- no cdp enable
-!
-interface Serial0/0/1:15
- description PBX: PIA1 1000
- no ip address
- encapsulation hdlc
- isdn switch-type primary-net5
- isdn protocol-emulate network
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- no cdp enable
-!
-interface Serial0/1/0:15
- description RAS: PIA1 4000
- no ip address
- encapsulation hdlc
- isdn switch-type primary-net5
- isdn protocol-emulate network
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- no cdp enable
-!
-interface Serial0/1/1:15
- description TRUNK: OCTOI
- no ip address
- encapsulation hdlc
- isdn switch-type primary-net5
  isdn incoming-voice voice
  isdn send-alerting
  isdn sending-complete
@@ -304,15 +278,6 @@ control-plane
 voice-port 0/0/0:15
  cptone IT
 !
-voice-port 0/1/0:15
- cptone IT
-!
-voice-port 0/0/1:15
- cptone IT
-!
-voice-port 0/1/1:15
- cptone IT
-!
 voice-port 0/3/0
  compand-type a-law
  cptone IT
@@ -326,91 +291,54 @@ voice-port 0/3/1
 mgcp profile default
 !
 !
-dial-peer voice 49 pots
- translation-profile outgoing trunk-octoi-de
- destination-pattern 0049.
- supplementary-service pass-through
- no digit-strip
- port 0/1/1:15
- forward-digits all
+dial-peer voice 100 voip
+ destination-pattern 026T
+ redirect ip2ip
+ session protocol sipv2
+ session target ipv4:10.255.241.160
+ session transport udp
+ no voice-class sip asserted-id
+ no voice-class sip privacy-policy passthru
+ voice-class sip profiles 1
+ dtmf-relay rtp-nte
+ codec g711alaw
 !
-dial-peer voice 1000 pots
- translation-profile outgoing local-subscriber-prefix
- destination-pattern 021000...
- supplementary-service pass-through
- no digit-strip
- port 0/0/1:15
- forward-digits all
-!
-dial-peer voice 1005 pots
- translation-profile outgoing local-subscriber-prefix
- destination-pattern 022000...
- supplementary-service pass-through
- no digit-strip
+dial-peer voice 10 pots
+ numbering-type unknown
+ incoming called-number .T
+ direct-inward-dial
  port 0/0/0:15
  forward-digits all
 !
-dial-peer voice 1010 pots
- translation-profile outgoing local-subscriber-prefix
- destination-pattern 024000
- supplementary-service pass-through
- port 0/1/0:15
-!
-dial-peer voice 1011 pots
- translation-profile outgoing local-subscriber-prefix
- destination-pattern 024000...
- supplementary-service pass-through
- no digit-strip
- port 0/1/0:15
- forward-digits all
-!
-dial-peer voice 2000 pots
- translation-profile outgoing int-subscriber-prefix
- destination-pattern 39021000...
- supplementary-service pass-through
- no digit-strip
- port 0/0/1:15
- forward-digits all
-!
-dial-peer voice 2005 pots
- translation-profile outgoing int-subscriber-prefix
- destination-pattern 39022000...
- supplementary-service pass-through
- no digit-strip
+dial-peer voice 20 pots
+ numbering-type unknown
+ destination-pattern 021000T
+ direct-inward-dial
  port 0/0/0:15
  forward-digits all
 !
-dial-peer voice 2010 pots
- translation-profile outgoing int-subscriber-prefix
- destination-pattern 39024000
- supplementary-service pass-through
- port 0/1/0:15
-!
-dial-peer voice 2011 pots
- translation-profile outgoing int-subscriber-prefix
- destination-pattern 39024000...
- supplementary-service pass-through
- no digit-strip
- port 0/1/0:15
+dial-peer voice 21 pots
+ numbering-type unknown
+ destination-pattern 022000T
+ direct-inward-dial
+ port 0/0/0:15
  forward-digits all
 !
-dial-peer voice 16 pots
- translation-profile outgoing trunk-asterisk-national
- destination-pattern 026.T
- port 0/3/0
+dial-peer voice 22 pots
+ numbering-type unknown
+ destination-pattern 024000T
+ direct-inward-dial
+ port 0/0/0:15
  forward-digits all
 !
-dial-peer voice 17 pots
- translation-profile outgoing unknown-isdn
- destination-pattern 39026.T
- port 0/3/0
- forward-digits all
 !
-dial-peer voice 1 pots
- translation-profile incoming unknown-isdn
- translation-profile outgoing unknown-isdn
- incoming called-number .
-!
+sip-ua
+ retry invite 2
+ retry register 9
+ timers trying 150
+ timers register 150
+ mwi-server ipv4:10.255.241.160 expires 3600 port 5060 transport udp unsolicited
+ registrar ipv4:10.255.241.160 expires 3600
 !
 !
 !
@@ -422,7 +350,7 @@ gatekeeper
 line con 0
 line aux 0
 line vty 0 4
- exec-timeout 30 0
+ exec-timeout 120 0
  privilege level 15
  transport input all
 !
