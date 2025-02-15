@@ -6,7 +6,7 @@ Here you can find the Dial Plan [here](dial-plan.txt)
 
 There is also a PSTN gateway if interested let me know.
 
-A consistent working setup noted by a tag.
+A consistent working setup is noted by a tag.
 
 ![Alt text](e1d.png?raw=true "RetroNet TDM")
 
