@@ -1,0 +1,183 @@
+!
+version 15.1
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname C1841LAB
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging buffered 4096
+!
+aaa new-model
+!
+!
+aaa authentication login default local
+aaa authorization exec default local
+!
+!
+!
+!
+!
+aaa session-id common
+!
+dot11 syslog
+ip source-route
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+isdn switch-type basic-net3
+crypto pki token default removal timeout 0
+!
+!
+!
+!
+license udi pid CISCO1841 sn FCZ100412N6
+username remote password 0 remote
+username cisco privilege 15 password 0 cisco
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 192.168.107.1 255.255.255.240
+!
+interface FastEthernet0/0
+ ip address dhcp
+ duplex auto
+ speed auto
+ mpls ip
+!
+interface FastEthernet0/1
+ ip address dhcp
+ duplex auto
+ speed auto
+ no keepalive
+!
+interface BRI0/0/0
+ no ip address
+ encapsulation ppp
+ dialer pool-member 1
+ autodetect encapsulation ppp v120
+ isdn switch-type basic-net3
+ isdn point-to-point-setup
+ no fair-queue
+!
+interface Async0/1/0
+ no ip address
+ encapsulation slip
+ dialer in-band
+ dialer pool-member 2
+ no peer default ip address
+ async mode interactive
+!
+interface Dialer1
+ ip unnumbered Loopback0
+ encapsulation ppp
+ dialer pool 1
+ dialer idle-timeout 0
+ dialer persistent
+ peer default ip address pool dialup
+ ppp authentication chap pap callin
+ ppp multilink
+ no cdp enable
+!
+interface Dialer2
+ ip unnumbered Loopback0
+ encapsulation ppp
+ dialer pool 2
+ dialer idle-timeout 0
+ dialer persistent
+ peer default ip address pool dialup
+ ppp authentication chap pap callin
+ no cdp enable
+!
+ip local pool dialup 192.168.107.2 192.168.107.10
+ip forward-protocol nd
+no ip http server
+no ip http secure-server
+!
+!
+!
+logging esm config
+!
+!
+menu main status-line
+!
+menu cisco title ^C
+++++++++++++++++++++++++++++++++++++++++++++++++
+^C
+menu cisco prompt ^C
+++++++++++++++++++++++++++++++++++++++++++++++++
+
+Choose your option
+^C
+menu cisco text 1 login to TLC01MIL1F
+menu cisco command 1 telnet 10.254.233.1
+menu cisco text 9 Show online users
+menu cisco command 9 show users all
+menu cisco options 9 pause
+menu cisco text e menu-exit
+menu cisco command e menu-exit
+menu cisco text q disconnect from terminal server
+menu cisco command q exit
+menu cisco command ppp ppp
+menu cisco clear-screen
+menu cisco status-line
+menu cisco line-mode
+!
+!
+!
+snmp-server community public RO
+snmp-server location RLS
+!
+!
+!
+!
+control-plane
+!
+!
+banner motd ^C
+
+  WW       WW IIIII DDDDD   EEEEEEE        NN   NN EEEEEEE TTTTTTT
+  WW       WW  III  DD  DD  EE             NNN  NN EE        TTT
+  WW   W   WW  III  DD   DD EEEEE   =====  NN N NN EEEEE     TTT
+   WW WWW WW   III  DD   DD EE             NN  NNN EE        TTT
+    WW   WW   IIIII DDDDDD  EEEEEEE        NN   NN EEEEEEE   TTT
+
+^C
+!
+line con 0
+ privilege level 15
+line aux 0
+line 0/1/0
+ modem InOut
+ autoselect during-login
+ autoselect ppp
+ stopbits 1
+ speed 115200
+ flowcontrol hardware
+line vty 0 4
+ exec-timeout 120 0
+ privilege level 15
+ transport input all
+!
+scheduler allocate 20000 1000
+end

@@ -1,0 +1,12 @@
+C1841LAB#sh inventory
+NAME: "chassis", DESCR: "1841 chassis"
+PID: CISCO1841         , VID: V02 , SN: FCZ100412N6
+
+NAME: "motherboard", DESCR: "C1841 Motherboard with 2 Fast Ethernet"
+PID: CISCO1841         , VID: V02 , SN: FOC100210SM
+
+NAME: "WIC 0", DESCR: "Wan Interface Card BRI S/T (3086)"
+PID: WIC-1B-S/T-V3     , VID: V01 , SN: FOC10271KC7
+
+NAME: "WIC 1", DESCR: "WAN Interface Card - One Port Analog Modem(Version 2)"
+PID: WIC-1AM-V2        , VID: V03 , SN: FOC16025FJR
