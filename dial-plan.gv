@@ -1,0 +1,67 @@
+digraph G {
+  rankdir=LR;
+  //splines="FALSE";
+  graph [nodesep=0.5, ranksep=1.5];
+  compound=true;
+
+
+subgraph cluster0 {
+  label="Dial Plan";
+
+subgraph cluster000 {
+  label="Milan";
+  "02" [shape=record,label="<num>02|<cnet>C*NET|<octoi>OCTOI"]
+  "0245071XXX" [shape=record,label="<num>45071XXX|<pstn>PSTN"]
+
+
+subgraph cluster0000 {
+  label="Italy";
+  "0039" [shape=record,label="<num>+39|<cnet>C*NET|<octoi>OCTOI"]
+}
+
+//subgraph cluster0001 {
+//  label="Germany";
+//  "0049" [label="+49"]
+//}
+
+}
+subgraph cluster00 {
+  label="RLS";
+  Avaya [shape=record,label="<host>Avaya|<2000>2000 XXX|<2100>2100 XXX"]
+  Patton [shape=record,label="<host>Patton|<2123>2123 XXX"]
+}
+
+subgraph cluster01 {
+  label="MIL1";
+  "Asterisk" [shape=record,label="<host>Asterisk|<cnet>C*NET|<pstn>PSTN|<1000>1000 XXX|<2000>2000 XXX|<2100>2100 XXX|<2123>2123 XXX|<5000>5XXX|<6000>6XXX|<6100>6100 XXX"]
+  "Yate" [shape=record,label="<host>Yate|<cnet>C*NET|<pstn>PSTN|<2100>2100 XXX"]
+  "CiscoTDM" [shape=record,label="<host>CiscoTDM|<1000>1000 XXX|<2000>2000 XXX|<5000>5XXX"]
+}
+
+}
+
+  0039:num -> 02:num
+  02:num -> "0245071XXX":num
+
+  02:cnet -> Asterisk:cnet [label=IAX,color=orange]
+  "0245071XXX":pstn -> Asterisk:pstn [label="SIP",color=blue]
+
+  0039:cnet -> 02:cnet [label=IAX,color=orange]
+  0039:octoi -> 02:octoi [label=TDM,color=red]
+
+  02:octoi -> CiscoTDM:host [label=TDM,color=red]
+  CiscoTDM:2000 -> Avaya:2000 [label=TDM,color=red]
+  
+  Asterisk:1000 -> CiscoTDM:1000 [label="SIP",color=blue]
+  Asterisk:2000 -> CiscoTDM:2000 [label="SIP",color=blue]
+  Asterisk:2100 -> Avaya:2100 [label="SIP",color=blue]
+  Asterisk:2123 -> Patton:2123 [label="SIP",color=blue]
+  Asterisk:5000 -> CiscoTDM:5000 [label="SIP",color=blue]
+  
+  Yate:2100 -> Avaya:2100 [label="SIP",color=blue]
+  
+  //Avaya -> Yate
+  //Avaya -> Asterisk
+  //Avaya -> CiscoTDM 
+
+}
