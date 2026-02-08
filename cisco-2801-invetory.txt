@@ -1,0 +1,24 @@
+TLC01RLS#sh inventory
+NAME: "chassis", DESCR: "2801 chassis"
+PID: CISCO2801         , VID: V01 , SN: FCZ0943216U
+
+NAME: "motherboard", DESCR: "C2801 Motherboard with 2 Fast Ethernet"
+PID: CISCO2801         , VID: V01 , SN: FOC09343TBB
+
+NAME: "VIC 0", DESCR: "2nd generation two port BRI voice interface daughtercard"
+PID: VIC2-2BRI-NT/TE   , VID: V01 , SN: FOC10323W31
+
+NAME: "WIC/VIC/HWIC 1", DESCR: "2nd generation two port BRI voice interface daughtercard"
+PID: VIC2-2BRI-NT/TE   , VID: V01 , SN: FOC1047299M
+
+NAME: "WIC/VIC 2", DESCR: "2nd generation two port BRI voice interface daughtercard"
+PID: VIC2-2BRI-NT/TE   , VID: V02 , SN: FOC12284AZD
+
+NAME: "WIC/VIC/HWIC 3", DESCR: "VWIC2-2MFT-T1/E1 - 2-Port RJ-48 Multiflex Trunk - T1/E1"
+PID: VWIC2-2MFT-T1/E1  , VID: V01 , SN: FOC13504X41
+
+NAME: "PVDM 0", DESCR: "PVDMII DSP SIMM with four DSPs"
+PID: PVDM2-64          , VID: V01 , SN: FOC10273YXF
+
+NAME: "PVDM 1", DESCR: "PVDMII DSP SIMM with four DSPs"
+PID: PVDM2-64          , VID: V01 , SN: FOC10273YDN

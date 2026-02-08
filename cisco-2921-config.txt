@@ -1,38 +1,44 @@
+TLC01MIL1F#sh run
+Building configuration...
+
+
+Current configuration : 9113 bytes
 !
-! No configuration change since last restart
+! Last configuration change at 16:43:19 UTC Tue Jan 27 2026 by admin
 !
-version 15.5
+version 15.7
 service timestamps debug datetime msec
 service timestamps log datetime msec
 no service password-encryption
 !
-hostname C2911LAB
+hostname TLC01MIL1F
 !
 boot-start-marker
-boot system flash:c2900-universalk9-mz.SPA.155-3.M2.bin
+boot system flash:c2900-universalk9-mz.SPA.157-3.M8.bin
 boot-end-marker
 !
 !
 card type e1 0 0
 card type e1 0 1
+card type e1 0 2
 !
 aaa new-model
 !
 !
-aaa authentication login default local
-aaa authorization exec default local
+aaa authorization exec default local if-authenticated
+!
 !
 !
 !
 !
 !
 aaa session-id common
-ethernet lmi ce
 network-clock-participate wic 0
 network-clock-participate wic 1
+network-clock-participate wic 2
 network-clock-participate wic 3
 network-clock-select 1 E1 0/0/0
-network-clock-select 2 E1 0/0/3
+network-clock-select 2 E1 0/0/1
 !
 !
 !
@@ -45,26 +51,9 @@ network-clock-select 2 E1 0/0/3
 !
 !
 !
-!
-!
-!
-!
-
-
-!
-!
-!
-!
-ip domain name retro.wide-net.org
-ip name-server 185.78.48.35
-ip name-server 185.78.48.40
 ip cef
-login on-failure log
-login on-success log
-ipv6 unicast-routing
-ipv6 cef
+no ipv6 cef
 multilink bundle-name authenticated
-!
 !
 !
 !
@@ -77,9 +66,42 @@ voice-card 0
 !
 !
 voice call send-alert
+voice rtp send-recv
 !
 voice service pots
  no direct-inward-dial isdn
+!
+voice service voip
+ ip address trusted list
+  ipv4 10.254.239.160
+  ipv4 10.254.239.161
+  ipv4 10.254.233.160
+  ipv4 10.15.20.20
+  ipv4 10.162.202.44
+ qsig decode
+ allow-connections h323 to h323
+ allow-connections h323 to sip
+ allow-connections sip to h323
+ allow-connections sip to sip
+ supplementary-service h450.12
+ no supplementary-service sip moved-temporarily
+ no supplementary-service sip refer
+ redirect ip2ip
+ signaling forward unconditional
+ fax protocol t38 version 0 ls-redundancy 0 hs-redundancy 0 fallback none
+ h323
+  call preserve
+ sip
+  rel1xx require "100rel"
+  sip-profiles 1
+!
+voice class codec 1
+ codec preference 1 g711alaw
+!
+!
+voice class sip-profiles 1
+ request INVITE sip-header From modify "<sip:anonymous@" "<sip:0000000000@"
+!
 !
 !
 !
@@ -133,86 +155,60 @@ voice translation-rule 14
  rule 1 /^026/ /026/ type any national plan any isdn
 !
 !
-voice translation-profile debug
-translate calling 9
-translate called 8
-!
-voice translation-profile int-subscriber-prefix
-translate calling 13
-translate called 12
-!
 voice translation-profile local-subscriber-prefix
-translate calling 11
-translate called 10
-!
-voice translation-profile profile1
-translate calling 1
-translate called 1
-!
-voice translation-profile profile2
-translate calling 2
-translate called 2
-!
-voice translation-profile profile4
-translate called 6
-!
-voice translation-profile trunk-asterisk-int
-!
-voice translation-profile trunk-asterisk-national
-translate calling 11
-translate called 14
+ translate calling 11
+ translate called 10
 !
 voice translation-profile trunk-octoi-de
-translate calling 3
-translate called 4
-!
-voice translation-profile unknown-isdn
-translate calling 7
-translate called 7
+ translate calling 3
+ translate called 4
 !
 !
 !
-license udi pid CISCO2911/K9 sn FCZ135071PM
-license accept end user agreement
-license boot module c2900 technology-package uck9
-license boot module c2900 technology-package datak9
+fax interface-type fax-mail
+mta send server 10.254.239.225 port 25
+mta send with-subject both
+mta send mail-from hostname wide-net.org
+mta send mail-from username fax
+mta receive aliases fax.wide-net.org
+mta receive maximum-recipients 10
+!
+application
+ service onramp flash:/app_faxmail_onramp.2.0.1.3.tcl
+ !
+ service offramp flash:app_faxmail_offramp.2.0.1.1.tcl
+ !
+!
+vxml logging-tag
+license udi pid CISCO2901/K9 sn FCZ1832C3C4
 hw-module pvdm 0/0
 !
+hw-module pvdm 0/1
 !
 !
+!
+username admin privilege 15 password 0 admin
 !
 redundancy
 !
 !
 controller E1 0/0/0
- pri-group timeslots 1-20
+ pri-group timeslots 1-16
 !
 controller E1 0/0/1
- clock source internal
- pri-group timeslots 1-20
-!
-controller E1 0/0/2
- clock source internal
- pri-group timeslots 1-20
-!
-controller E1 0/0/3
- pri-group timeslots 1-20
+ pri-group timeslots 1-6,16
 !
 controller E1 0/1/0
  clock source internal
- pri-group timeslots 1-20
+ pri-group timeslots 1-6,16
 !
 controller E1 0/1/1
  clock source internal
- pri-group timeslots 1-20
+ pri-group timeslots 1-6,16
 !
-controller E1 0/1/2
- shutdown
- clock source internal
- pri-group timeslots 1-20
+controller E1 0/2/0
 !
-controller E1 0/1/3
- pri-group timeslots 1-20
+controller E1 0/2/1
 lldp run
 !
 !
@@ -224,139 +220,78 @@ interface Embedded-Service-Engine0/0
  shutdown
 !
 interface GigabitEthernet0/0
- ip address 10.255.250.106 255.255.255.0
+ ip address 10.254.233.1 255.255.255.0
  duplex auto
  speed auto
 !
 interface GigabitEthernet0/1
  no ip address
- duplex auto
- speed auto
-!
-interface GigabitEthernet0/2
- no ip address
+ shutdown
  duplex auto
  speed auto
 !
 interface Serial0/0/0:15
- description PBX: PON 2000
+ description TRUNK: RLS
  no ip address
  encapsulation hdlc
+ no cdp enable
  isdn switch-type primary-net5
  isdn protocol-emulate network
  isdn incoming-voice voice
  isdn send-alerting
  isdn sending-complete
- no cdp enable
 !
 interface Serial0/0/1:15
- description PBX: PIA1 1000
- no ip address
- encapsulation hdlc
- isdn switch-type primary-net5
- isdn protocol-emulate network
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- no cdp enable
-!
-interface Serial0/0/2:15
- description RAS: PIA1 4000
- no ip address
- encapsulation hdlc
- isdn switch-type primary-net5
- isdn protocol-emulate network
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- no cdp enable
-!
-interface Serial0/0/3:15
  description TRUNK: OCTOI
  no ip address
  encapsulation hdlc
+ no cdp enable
  isdn switch-type primary-net5
  isdn incoming-voice voice
  isdn send-alerting
  isdn sending-complete
- no cdp enable
 !
 interface Serial0/1/0:15
- description TRUNK: Asterisk
  no ip address
  encapsulation hdlc
+ no cdp enable
  isdn switch-type primary-net5
  isdn incoming-voice voice
  isdn send-alerting
  isdn sending-complete
- no cdp enable
 !
 interface Serial0/1/1:15
  no ip address
  encapsulation hdlc
+ no cdp enable
  isdn switch-type primary-net5
  isdn protocol-emulate network
  isdn incoming-voice voice
  isdn send-alerting
  isdn sending-complete
- no cdp enable
-!
-interface Serial0/1/2:15
- no ip address
- encapsulation hdlc
- isdn switch-type primary-net5
- isdn protocol-emulate network
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- no cdp enable
-!
-interface Serial0/1/3:15
- no ip address
- encapsulation hdlc
- isdn switch-type primary-net5
- isdn protocol-emulate network
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- no cdp enable
 !
 interface BRI0/3/0
- description TRUNK: ASTERISK
  no ip address
  isdn switch-type basic-net3
- isdn overlap-receiving
- isdn point-to-point-setup
- isdn incoming-voice voice
- isdn send-alerting
- isdn sending-complete
- isdn incoming alerting add-PI
+ isdn protocol-emulate network
  isdn skipsend-idverify
 !
 interface BRI0/3/1
  no ip address
  isdn switch-type basic-net3
- isdn protocol-emulate network
- isdn layer1-emulate network
- isdn incoming-voice voice
- isdn map address .* plan isdn type unknown
- isdn calling-number 023002
- isdn skipsend-idverify
+ isdn point-to-point-setup
 !
-!
-no ip forward-protocol nd
+ip forward-protocol nd
 !
 no ip http server
 no ip http secure-server
 !
-ip route 0.0.0.0 0.0.0.0 10.255.250.250
+ip route 0.0.0.0 0.0.0.0 10.254.233.250
 !
 !
 !
-!
-snmp-server community public RO 10
-snmp-server ifindex persist
-snmp-server location PIA1
+snmp-server community public RO
+snmp-server location MIL1F
 !
 !
 !
@@ -373,23 +308,11 @@ voice-port 0/0/1:15
  cptone IT
 !
 voice-port 0/1/1:15
-!
-voice-port 0/0/2:15
-!
-voice-port 0/1/2:15
+ cptone IT
 !
 voice-port 0/3/0
- compand-type a-law
- cptone IT
 !
 voice-port 0/3/1
- compand-type a-law
- cptone IT
-!
-voice-port 0/0/3:15
- cptone DE
-!
-voice-port 0/1/3:15
  !
  !
  !
@@ -405,37 +328,16 @@ mgcp profile default
 !
 !
 !
-dial-peer voice 16 pots
- translation-profile outgoing trunk-asterisk-national
- destination-pattern 026.T
- port 0/1/0:15
- forward-digits all
-!
-dial-peer voice 17 pots
- translation-profile outgoing unknown-isdn
- destination-pattern 39026.T
- port 0/3/0
- forward-digits all
-!
-dial-peer voice 1005 pots
- translation-profile outgoing local-subscriber-prefix
- destination-pattern 022000...
- supplementary-service pass-through
- no digit-strip
- port 0/0/0:15
- forward-digits all
-!
-dial-peer voice 2000 pots
- translation-profile outgoing int-subscriber-prefix
- destination-pattern 39021000...
+dial-peer voice 49 pots
+ translation-profile outgoing trunk-octoi-de
+ destination-pattern 0049T
  supplementary-service pass-through
  no digit-strip
  port 0/0/1:15
  forward-digits all
 !
-dial-peer voice 2005 pots
- translation-profile outgoing int-subscriber-prefix
- destination-pattern 39022000...
+dial-peer voice 1005 pots
+ destination-pattern 02200....
  supplementary-service pass-through
  no digit-strip
  port 0/0/0:15
@@ -446,80 +348,110 @@ dial-peer voice 1000 pots
  destination-pattern 021000...
  supplementary-service pass-through
  no digit-strip
- port 0/0/1:15
+ port 0/1/1:15
  forward-digits all
 !
-dial-peer voice 1010 pots
- translation-profile outgoing local-subscriber-prefix
- destination-pattern 024000
- supplementary-service pass-through
- port 0/0/2:15
-!
-dial-peer voice 1011 pots
- translation-profile outgoing local-subscriber-prefix
- destination-pattern 024000...
- supplementary-service pass-through
- no digit-strip
- port 0/0/2:15
- forward-digits all
-!
-dial-peer voice 2010 pots
+dial-peer voice 2005 pots
  translation-profile outgoing int-subscriber-prefix
- destination-pattern 39024000
+ destination-pattern 3902200....
  supplementary-service pass-through
- port 0/0/2:15
+ no digit-strip
+ port 0/0/0:15
+ forward-digits all
 !
-dial-peer voice 2011 pots
+dial-peer voice 2000 pots
  translation-profile outgoing int-subscriber-prefix
- destination-pattern 39024000...
- supplementary-service pass-through
- no digit-strip
- port 0/0/2:15
- forward-digits all
-!
-dial-peer voice 49 pots
- translation-profile outgoing trunk-octoi-de
- destination-pattern 0049.
- supplementary-service pass-through
- no digit-strip
- port 0/0/3:15
- forward-digits all
-!
-dial-peer voice 10 pots
- numbering-type unknown
- incoming called-number .T
- direct-inward-dial
- port 0/1/0:15
- forward-digits all
-!
-dial-peer voice 11 pots
- numbering-type unknown
- incoming called-number .T
- direct-inward-dial
- port 0/0/3:15
- forward-digits all
-!
-dial-peer voice 1006 pots
- destination-pattern 021100.
- supplementary-service pass-through
- no digit-strip
- port 0/3/1
- forward-digits all
-!
-dial-peer voice 1007 pots
- destination-pattern 021200T
+ destination-pattern 39021000...
  supplementary-service pass-through
  no digit-strip
  port 0/1/1:15
  forward-digits all
 !
-dial-peer voice 1008 pots
- destination-pattern 021300T
+dial-peer voice 4949 pots
+ destination-pattern 49T
  supplementary-service pass-through
  no digit-strip
- port 0/1/2:15
+ port 0/0/1:15
  forward-digits all
 !
+dial-peer voice 100 voip
+ destination-pattern 026...
+ redirect ip2ip
+ session target ipv4:10.254.233.160
+ no voice-class sip asserted-id
+ no voice-class sip privacy-policy passthru
+ voice-class sip profiles 1
+ codec g711alaw
+!
+dial-peer voice 10 pots
+ numbering-type unknown
+ incoming called-number .T
+ direct-inward-dial
+ forward-digits all
+!
+dial-peer voice 101 voip
+ destination-pattern 026100...
+ redirect ip2ip
+ session target ipv4:10.254.233.160
+ no voice-class sip asserted-id
+ no voice-class sip privacy-policy passthru
+ voice-class sip profiles 1
+ codec g711alaw
+!
+dial-peer voice 5000 mmoip
+ service fax_on_vfc_onramp_app out-bound
+ destination-pattern 025000
+ information-type fax
+ session target mailto:leo@deepreflect.net
+!
+dial-peer voice 11 pots
+ numbering-type unknown
+ service onramp
+ incoming called-number 025000
+ direct-inward-dial
+ forward-digits all
+!
+dial-peer voice 5001 mmoip
+ service offramp
+ information-type fax
+ incoming called-number .
+!
+dial-peer voice 2103 voip
+ destination-pattern 022103...
+ redirect ip2ip
+ session target ipv4:10.254.233.160
+ codec g711alaw
+!
+dial-peer voice 123 voip
+ destination-pattern 022123...
+ redirect ip2ip
+ session target ipv4:10.254.233.160
+ no voice-class sip asserted-id
+ no voice-class sip privacy-policy passthru
+ voice-class sip profiles 1
+ codec g711alaw
+!
+dial-peer voice 2104 voip
+ destination-pattern 022104...
+ redirect ip2ip
+ session target ipv4:10.254.233.160
+ codec g711alaw
+!
+dial-peer voice 2105 voip
+ destination-pattern 022105...
+ redirect ip2ip
+ session target ipv4:10.254.233.160
+ codec g711alaw
+!
+dial-peer voice 100001 voip
+ destination-pattern 011T
+ redirect ip2ip
+ session target ipv4:10.15.20.20
+ codec transparent
+!
+!
+sip-ua
+ connection-reuse via-port
 !
 !
 !
@@ -527,9 +459,7 @@ gatekeeper
  shutdown
 !
 !
-!
 line con 0
- privilege level 15
 line aux 0
 line 2
  no activation-character
@@ -538,12 +468,7 @@ line 2
  transport output pad telnet rlogin lapb-ta mop udptn v120 ssh
  stopbits 1
 line vty 0 4
- access-class 10 in vrf-also
- exec-timeout 120 0
- privilege level 15
  transport input all
-line vty 5 15
- transport input none
 !
 scheduler allocate 20000 1000
 ntp server ntp1.ien.it
@@ -551,4 +476,4 @@ ntp server ntp2.ien.it
 !
 end
 
-C2911LAB#
+TLC01MIL1F#

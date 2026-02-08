@@ -1,0 +1,495 @@
+TLC01RLS#sh run
+Building configuration...
+
+
+Current configuration : 9406 bytes
+!
+! Last configuration change at 00:57:14 UTC Sun Feb 8 2026 by admin
+! NVRAM config last updated at 00:57:18 UTC Sun Feb 8 2026 by admin
+! NVRAM config last updated at 00:57:18 UTC Sun Feb 8 2026 by admin
+version 15.1
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname TLC01RLS
+!
+boot-start-marker
+boot system flash c2801-advipservicesk9-mz.151-4.M12a.bin
+boot-end-marker
+!
+!
+card type e1 0 3
+!
+aaa new-model
+!
+!
+aaa authorization exec default local if-authenticated
+!
+!
+!
+!
+!
+aaa session-id common
+!
+network-clock-participate wic 0
+network-clock-participate wic 1
+network-clock-participate wic 2
+network-clock-participate wic 3
+network-clock-select 1 E1 0/3/0
+dot11 syslog
+ip source-route
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+!
+!
+isdn switch-type primary-net5
+!
+!
+voice call send-alert
+!
+voice service pots
+ no direct-inward-dial isdn
+!
+!
+!
+!
+voice translation-rule 1
+ rule 1 /^2000/ /2&/ type any national plan any isdn
+ rule 2 /^1000/ /2&/ type any national plan any isdn
+!
+voice translation-rule 2
+ rule 1 /^2000/ /&/ type any unknown plan any isdn
+ rule 2 /^1000/ /&/ type any unknown plan any isdn
+!
+voice translation-rule 3
+ rule 1 /^0039+/ /39/
+ rule 2 // /3902/ type subscriber international plan any isdn
+!
+voice translation-rule 4
+ rule 1 /^0049+/ /49/ type any international plan any isdn
+!
+voice translation-rule 5
+ rule 1 /^0039+/ /39/
+!
+voice translation-rule 6
+ rule 1 /^3902/ // type any unknown plan any isdn
+!
+voice translation-rule 7
+ rule 1 // // type any unknown plan any isdn
+!
+voice translation-rule 8
+ rule 1 // /55555555555555555555/ type any unknown plan any isdn
+!
+voice translation-rule 9
+ rule 1 // /6666666666666666666/ type any unknown plan any isdn
+!
+voice translation-rule 10
+ rule 1 /^0+/ // type any national plan any isdn
+!
+voice translation-rule 11
+ rule 1 // /02/ type subscriber national plan any isdn
+ rule 2 /^00+/ // type unknown international plan any isdn
+!
+voice translation-rule 12
+ rule 1 /^3902/ /2/ type international national plan any isdn
+ rule 2 // // type any international plan any isdn
+!
+voice translation-rule 13
+ rule 1 // /02/ type subscriber national plan any isdn
+ rule 2 /^00+/ // type unknown international plan any isdn
+!
+voice translation-rule 14
+ rule 1 /^026/ /026/ type any national plan any isdn
+!
+!
+voice translation-profile debug
+ translate calling 9
+ translate called 8
+!
+voice translation-profile int-subscriber-prefix
+ translate calling 13
+ translate called 12
+!
+voice translation-profile local-subscriber-prefix
+ translate calling 11
+ translate called 10
+!
+voice translation-profile profile1
+ translate calling 1
+ translate called 1
+!
+voice translation-profile profile2
+ translate calling 2
+ translate called 2
+!
+voice translation-profile profile4
+ translate called 6
+!
+voice translation-profile trunk-asterisk-int
+!
+voice translation-profile trunk-asterisk-national
+ translate calling 11
+ translate called 14
+!
+voice translation-profile trunk-octoi-de
+ translate calling 3
+ translate called 4
+!
+voice translation-profile unknown-isdn
+ translate calling 7
+ translate called 7
+!
+!
+voice-card 0
+ dsp services dspfarm
+!
+crypto pki token default removal timeout 0
+!
+!
+!
+!
+license udi pid CISCO2801 sn FCZ0943216U
+archive
+ log config
+  hidekeys
+!
+redundancy
+!
+!
+controller E1 0/3/0
+ pri-group timeslots 1-16
+!
+controller E1 0/3/1
+ shutdown
+ clock source internal
+ pri-group timeslots 1-16
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface FastEthernet0/0
+ ip address dhcp
+ duplex auto
+ speed auto
+!
+interface FastEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface BRI0/0/0
+ no ip address
+ isdn switch-type basic-net3
+ isdn protocol-emulate network
+ isdn layer1-emulate network
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ isdn skipsend-idverify
+!
+interface BRI0/0/1
+ no ip address
+ isdn switch-type basic-net3
+ isdn protocol-emulate network
+ isdn layer1-emulate network
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ isdn skipsend-idverify
+!
+interface BRI0/1/0
+ no ip address
+ isdn switch-type basic-net3
+ isdn overlap-receiving T302 20000
+ isdn protocol-emulate network
+ isdn layer1-emulate network
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ isdn skipsend-idverify
+!
+interface BRI0/1/1
+ no ip address
+ isdn switch-type basic-net3
+ isdn protocol-emulate network
+ isdn layer1-emulate network
+ isdn incoming-voice voice
+ isdn send-alerting
+ isdn sending-complete
+ isdn skipsend-idverify
+!
+interface BRI0/2/0
+ no ip address
+ isdn switch-type basic-net3
+ isdn point-to-point-setup
+ isdn layer1-emulate network
+!
+interface BRI0/2/1
+ no ip address
+ isdn switch-type basic-net3
+ isdn point-to-point-setup
+ isdn layer1-emulate network
+!
+interface Serial0/3/0:15
+ no ip address
+ encapsulation hdlc
+ isdn switch-type primary-net5
+ isdn incoming-voice voice
+ no cdp enable
+!
+interface Serial0/3/1:15
+ no ip address
+ encapsulation hdlc
+ isdn switch-type primary-net5
+ isdn incoming-voice voice
+ no cdp enable
+!
+ip forward-protocol nd
+!
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+snmp-server community public RO
+snmp-server location RLS
+!
+!
+!
+!
+control-plane
+!
+disable-eadi
+!
+voice-port 0/0/0
+ compand-type a-law
+ cptone IT
+!
+voice-port 0/0/1
+ compand-type a-law
+ cptone IT
+!
+voice-port 0/3/0:15
+ cptone IT
+!
+voice-port 0/1/0
+ compand-type a-law
+ cptone IT
+!
+voice-port 0/1/1
+ compand-type a-law
+ cptone IT
+!
+voice-port 0/3/1:15
+!
+voice-port 0/2/0
+ compand-type a-law
+ cptone IT
+!
+voice-port 0/2/1
+ compand-type a-law
+ cptone IT
+!
+!
+mgcp fax t38 ecm
+!
+mgcp profile default
+!
+!
+dial-peer voice 1005 pots
+ destination-pattern 022000...
+ supplementary-service pass-through
+ no digit-strip
+ forward-digits all
+!
+dial-peer voice 2005 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39022000...
+ supplementary-service pass-through
+ no digit-strip
+ forward-digits all
+!
+dial-peer voice 49 pots
+ translation-profile outgoing trunk-octoi-de
+ destination-pattern 0049T
+ supplementary-service pass-through
+ no digit-strip
+ port 0/3/0:15
+ forward-digits all
+!
+dial-peer voice 17 pots
+ translation-profile outgoing trunk-asterisk-national
+ destination-pattern 025T
+ forward-digits all
+!
+dial-peer voice 3005 pots
+ destination-pattern 22000...
+ supplementary-service pass-through
+ no digit-strip
+ forward-digits all
+!
+dial-peer voice 10 pots
+ numbering-type unknown
+ incoming called-number .T
+ direct-inward-dial
+ forward-digits all
+!
+dial-peer voice 1010 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 024000
+ supplementary-service pass-through
+ port 0/3/1:15
+!
+dial-peer voice 1011 pots
+ translation-profile outgoing local-subscriber-prefix
+ destination-pattern 024000...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/3/1:15
+ forward-digits all
+!
+dial-peer voice 1006 pots
+ destination-pattern 022001...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/0
+ forward-digits all
+!
+dial-peer voice 2006 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39022001...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/0
+ forward-digits all
+!
+dial-peer voice 3006 pots
+ destination-pattern 22001...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/0
+ forward-digits all
+!
+dial-peer voice 1007 pots
+ destination-pattern 022002...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/0
+ forward-digits all
+!
+dial-peer voice 2007 pots
+ translation-profile outgoing int-subscriber-prefix
+ destination-pattern 39022002...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/0
+ forward-digits all
+!
+dial-peer voice 3007 pots
+ destination-pattern 22002...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/0
+ forward-digits all
+!
+dial-peer voice 18 pots
+ destination-pattern 0260..
+ direct-inward-dial
+ port 0/3/0:15
+ forward-digits all
+!
+dial-peer voice 19 pots
+ destination-pattern 0261.....
+ direct-inward-dial
+ port 0/3/0:15
+ forward-digits all
+!
+dial-peer voice 1016 pots
+ preference 1
+ destination-pattern 022001...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/1
+ forward-digits all
+!
+dial-peer voice 2016 pots
+ translation-profile outgoing int-subscriber-prefix
+ preference 1
+ destination-pattern 39022001...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/1
+ forward-digits all
+!
+dial-peer voice 3016 pots
+ preference 1
+ destination-pattern 22001...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/0/1
+ forward-digits all
+!
+dial-peer voice 1017 pots
+ preference 1
+ destination-pattern 022002...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/1
+ forward-digits all
+!
+dial-peer voice 2017 pots
+ translation-profile outgoing int-subscriber-prefix
+ preference 1
+ destination-pattern 39022002...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/1
+ forward-digits all
+!
+dial-peer voice 3017 pots
+ preference 1
+ destination-pattern 22002...
+ supplementary-service pass-through
+ no digit-strip
+ port 0/1/1
+ forward-digits all
+!
+!
+!
+!
+!
+line con 0
+line aux 0
+ password acs
+ modem InOut
+ modem autoconfigure discovery
+ transport input all
+ speed 115200
+ flowcontrol hardware
+line vty 0 4
+ transport input all
+!
+scheduler allocate 20000 1000
+ntp server ntp1.ien.it
+ntp server ntp2.ien.it
+end
+
+TLC01RLS#

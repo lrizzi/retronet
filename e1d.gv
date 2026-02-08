@@ -45,33 +45,40 @@ subgraph cluster2 {
 subgraph cluster3 {
   label="Leo's Home";
   //compt01rls [shape=record,label="<host>Auerswald|<e1>E1|<s01>S0-1|<s02>S0-2|<s03>S0-3|<s04>S0-4|<s05>S0-5|<s06>S0-6|<s07>S0-7|<s08>S0-8|<ab1>a/b 1|<ab2>a/b 2|<ab3>a/b 3|<ab4>a/b 4|<ab5>a/b 5|<ab6>a/b 6|<ab7>a/b 7|<ab8>a/b 8"];
-  avaya01rls [shape=record,label="<host>Avaya IPO500|<lan1>LAN1|<lan2>LAN2|<ds_1-1>DS 1 (201)|<ds_1-2>DS 2 (202)|<ds_1-3>DS 3 (203)|<ds_1-4>DS 4 (204)|<ds_1-5>DS 5 (205)|<ds_1-6>DS 6 (206)|<ds_1-7>DS 7 (207)|<ds_1-8>DS 8 (208)|<s0_1-9>S0 1 (100)|<s0_1-10>S0 2 (105)|<ab_2-1>a/b 1 (211)|<ab_2-2>a/b 2 (212)|<ab_2-3>a/b 3 (213)|<ab_2-4>a/b 4 (214)|<ab_2-5>a/b 5 (215)|<ab_2-6>a/b 6 (216)|<ab_2-7>a/b 7 (217)|<ab_2-8>a/b 8 (218)|<s0_2-9>S0 3 (110)|<s0_2-10>S0 4 (115)|<s0_2-11>S0 5|<s0_2-12>S0 6||<e1_4-1>E1"];
+  //avaya01rls [shape=record,label="<host>Avaya IPO500|<lan1>LAN1|<lan2>LAN2|<ds_1-1>DS 1 (201)|<ds_1-2>DS 2 (202)|<ds_1-3>DS 3 (203)|<ds_1-4>DS 4 (204)|<ds_1-5>DS 5 (205)|<ds_1-6>DS 6 (206)|<ds_1-7>DS 7 (207)|<ds_1-8>DS 8 (208)|<s0_1-9>S0 1 (100)|<s0_1-10>S0 2 (105)|<ab_2-1>a/b 1 (211)|<ab_2-2>a/b 2 (212)|<ab_2-3>a/b 3 (213)|<ab_2-4>a/b 4 (214)|<ab_2-5>a/b 5 (215)|<ab_2-6>a/b 6 (216)|<ab_2-7>a/b 7 (217)|<ab_2-8>a/b 8 (218)|<s0_2-9>S0 3 (110)|<s0_2-10>S0 4 (115)|<s0_2-11>S0 5|<s0_2-12>S0 6||<e1_4-1>E1"];
+
+  avaya02rls [shape=record,label="<host>Avaya G430|<lan10_3>LAN 10/3|<lan10_4>LAN 10/4|<v1-lan1>V1 LAN|<v201>V2 BRI 1|<v202>V2 BRI 2|<v203>V2 BRI 3|<v204>V2 BRI 4|<v205>V2 BRI 5|<v206>V2 BRI 6|<v207>V2 BRI 7|<v208>V2 BRI 8|<v301>V3 BRI 1|<v302>V3 BRI 2|<v303>V3 BRI 3|<v304>V3 BRI 4|<v305>V3 BRI 5|<v306>V3 BRI 6|<v307>V3 BRI 7|<v308>V3 BRI 8"];
+
   tdm01rls [shape=record,label="<host>tdm01rls\nE1D|<e0>E0|<e1>E1"];
 
-  gigaset01rls [shape=record,label="Gigaset DECT"];
+  //gigaset01rls [shape=record,label="Gigaset DECT"];
   //r02rls [shape=record,label="Zyxel 202H"]
 
-  //tel01rls [shape=record,label="Telephone\nSiemens S62"];
-  //tel02rls [shape=record,label="Telephone\nSiemens S62"];
+  tel01rls [shape=record,label="Telephone\nSiemens S62"];
+  tel02rls [shape=record,label="Telephone\nSiemens S62"];
 
   itel01rls [shape=record,label="Telephone\nISDN"];
   
   //modem01rls [shape=record,label="MAC PowerPC\n38.8k Modem"];
   //modem02rls [shape=record,label="MAC 68k\n56k Modem"];
-  modem03rls [shape=record,label="56k Modem"];
+  //modem03rls [shape=record,label="56k Modem"];
   modem04rls [shape=record,label="Multitech\n56k Modem"];
 
   viedotel01rls [shape=record,label="Italtel\nVideotel"];
   fax01rls [shape=record,label="Sharp\nFAX"];
 
   //patton01 [shape=record,label="<host>Patton\nSN4600|<bri00>BRI 0/0|<bri01>BRI 0/1|<bri02>BRI 0/2|<bri03>BRI 0/3"]
-  cisco01rls [shape=record,label="<host>cisco01rls\nCisco 2801|<bri030>BRI0/3/0|<bri031>BRI0/3/1|<s010>Ser0/0/0|<s011>Ser0/1/1|<s020>Ser0/2/0|<s021>Ser0/2/1|<s030>Ser0/3/0|<s031>Ser0/3/1"];
+  cisco01rls [shape=record,label="<host>cisco01rls\nCisco 2801|<bri000>BRI0/0/0|<bri001>BRI0/0/1|<bri010>BRI0/1/0|<bri011>BRI0/1/1|<bri020>BRI0/2/0|<bri021>BRI0/2/1|<s030>Ser0/3/0|<s031>Ser0/3/1"];
   cisco02rls [shape=record,label="<host>cisco01rls\nCisco 1841|<bri000>BRI0/0/0|<as010>Async0/1/0"];
 
   //compt02rls [shape=record,label="<host>Auerswald|<e1>E1|<s01>S0-1|<s02>S0-2|<s03>S0-3|<s04>S0-4|<s05>S0-5|<s06>S0-6|<s07>S0-7|<s08>S0-8|<ab1>a/b 1|<ab2>a/b 2|<ab3>a/b 3|<ab4>a/b 4|<ab5>a/b 5|<ab6>a/b 6|<ab7>a/b 7|<ab8>a/b 8"];
   //cisco03rls [shape=record,label="<host>cisco03rls\nCisco 2821|<s000>Ser0/0/0|<s001>Ser0/0/1|<s010>Ser0/0/0|<s011>Ser0/1/1|<bri030>BRI0/3/0|<bri031>BRI0/3/1"];
   //cisco04rls [shape=record,label="<host>cisco04rls\nCisco 2921|<s000>Ser0/0/0|<s001>Ser0/0/1|<s002>Ser0/0/2|<s003>Ser0/0/3|<s010>Ser0/1/0|<s011>Ser0/1/1|<s012>Ser0/1/2|<s013>Ser0/1/3|<bri030>BRI0/3/0|<bri031>BRI0/3/1"];
   //cisco05rls [shape=record,label="<host>cisco05rls\nCisco 881V|<bri1>BRI1|<bri2>BRI2|<fxs3>FXS3|<fxs4>FXS4|<fxs5>FXS5|<fxs6>FXS6|<fxo7>FXO7"];
+
+  hi01rls [shape=record,label="<host>hi01rls\nHipath 3500|<1_1>BRI 1-1|<1_2>BRI 1-2||<2_1>UP 2-1|<2_2>UP 2-2||<2_8>UP 2-8||<3_1>a/b 3-1|<3_2>a/b 3-2|<3_3>a/b 3-3|<3_4>a/b 3-4||<6_1>a/b 6-1|<6_2>a/b 6-2|<6_3>a/b 6-3|<6_4>a/b 6-4|<6_5>a/b 6-5|<6_6>a/b 6-6|<6_7>a/b 6-7|<6_8>a/b 6-8||<7_1>LAN 7-1|<7_2>LAN 7-2||<8_1>BRI 8-1|<8_2>BRI 8-2|<8_3>BRI 8-3|<8_4>BRI 8-4"];
+
+  bs01 [shape=record,label="BS4 Dect"]
 
   //ras01rls [shape=record,label="<host>3Com\nRAS1500"]
   max01rls [shape=record,label="<host>Lucent\nMAX 2000"]
@@ -83,9 +90,13 @@ subgraph cluster3 {
   //r02rls [shape=record,label="<host>LANCOM\n1700"]
   //tel01rls [shape=record,label="Telephone"];
   
-  ds01rls [shape=record,label="Avaya DS\nTelephone"];
-  ds02rls [shape=record,label="Avaya DS\nTelephone"];
-  ds03rls [shape=record,label="Avaya DS\nTelephone"];
+  //ds01rls [shape=record,label="Avaya DS\nTelephone"];
+  //ds02rls [shape=record,label="Avaya DS\nTelephone"];
+  //ds03rls [shape=record,label="Avaya DS\nTelephone"];
+
+  up01rls [shape=record,label="Siemens Optiset\nTelephone"];
+  up02rls [shape=record,label="Siemens Optipoint\nTelephone"];
+
 
   h323rls [shape=record,label="Avaya\nH323 Telephones"];
 
@@ -131,7 +142,7 @@ tlc01mil1f:s010 -- fom01mil1f:e1coax
 //compt01mil1:s02 -- patton01mil1 [color=orange]
 tlc01mil1f:host -- rlt01mil1 [color=olivedrab]
 tlc01mil1f:host -- rlt02mil1 [color=olivedrab]
-avaya01rls:lan1 -- rlt01mil1 [color=olivedrab]
+avaya02rls:lan10_3 -- rlt01mil1 [color=olivedrab]
 //avaya01rls:lan1 -- rlt02mil1 [color=olivedrab]
 rlt01mil1 -- cnet [color=olivedrab]
 rlt01mil1 -- pstn [color=olivedrab]
@@ -139,28 +150,48 @@ rlt01mil1 -- pstn [color=olivedrab]
 
 
 //RLS
-tdm01rls:e0 -- avaya01rls:"e1_4-1"
-tdm01rls:e1 -- cisco01rls:s010
+//tdm01rls:e0 -- avaya01rls:"e1_4-1"
+tdm01rls:e0 -- cisco01rls:s030
 //cisco01rls:s011 -- compt01rls:e1
-cisco01rls:s020 -- max01rls
+cisco01rls:s031 -- max01rls
 
-avaya01rls:lan1 -- h323rls [color=green]
+avaya02rls:"lan10_3" -- h323rls [color=green]
 
-avaya01rls:"ds_1-1" -- ds01rls [color=grey]
-avaya01rls:"ds_1-2" -- ds02rls [color=grey]
-avaya01rls:"ds_1-3" -- ds03rls [color=grey]
+avaya02rls:v201 -- cisco01rls:bri010 [color=orange]
+avaya02rls:v202 -- cisco01rls:bri011 [color=orange]
 
-avaya01rls:"s0_1-9" -- gigaset01rls [color=orange]
-avaya01rls:"s0_1-10" -- cisco02rls:bri000 [color=orange]
-avaya01rls:"s0_2-9" -- itel01rls [color=orange]
+avaya02rls:v301 -- itel01rls [color=orange]
 
-avaya01rls:"ab_2-1" -- fax01rls [color=brown]
-avaya01rls:"ab_2-2" -- viedotel01rls [color=brown]
-avaya01rls:"ab_2-3" -- modem04rls [color=brown]
+hi01rls:"1_1" -- cisco01rls:bri000 [color=orange]
+hi01rls:"1_2" -- cisco01rls:bri001 [color=orange]
+
+hi01rls:"2_1" -- up01rls
+hi01rls:"2_2" -- up02rls
+hi01rls:"2_8" -- bs01 
+
+hi01rls:"3_2" -- tel01rls [color=brown]
+hi01rls:"3_3" -- cisco02rls:as010 [color=brown]
+
+hi01rls:"6_1" -- fax01rls [color=brown]
+hi01rls:"6_2" -- viedotel01rls [color=brown]
+hi01rls:"6_3" -- tel02rls [color=brown]
+hi01rls:"6_4" -- modem04rls [color=brown]
+
+//hi01rls:"7_1" -- rlt01mil1 [color=green]
+
+hi01rls:"8_1" -- avaya02rls:v203 [color=orange]
+hi01rls:"8_2" -- avaya02rls:v204 [color=orange]
+hi01rls:"8_4" -- cisco02rls:bri000 [color=orange]
+
+//avaya01rls:"s0_1-9" -- gigaset01rls [color=orange]
+//hi01rls:"8_1" -- itel01rls [color=orange]
+
+//avaya01rls:"ab_2-5" -- modem03rls [color=brown]
+//avaya01rls:"ab_2-3" -- modem04rls [color=brown]
 //avaya01rls:"ab_2_4" -- cisco02rls [color=brown]
-avaya01rls:"ab_2-5" -- modem03rls [color=brown]
-avaya01rls:"ab_2-6" -- cisco02rls:as010 [color=brown]
-
+//avaya01rls:"ds_1-1" -- ds01rls [color=grey]
+//avaya01rls:"ds_1-2" -- ds02rls [color=grey]
+//avaya01rls:"ds_1-3" -- ds03rls [color=grey]
 
 //compt01rls:ab1 -- modem01rls [color=brown]
 //compt01rls:ab2 -- modem02rls [color=brown]
