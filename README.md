@@ -2,7 +2,7 @@
 
 This is a really convoluted and inefficent way to build an ISDN network using Cisco devices not really designed to be a Telephone switch, but anyway it kind of works, the entire network it's connected via TDM to OCTOI (Osmocom Community TDM over IP) and via IAX to C*NET (The Collectors' Net) so it's reacheable and consistent.
 
-Here you can find the Dial Plan [here](dial-plan.txt)
+Here you can find the [Dial Plan](dial-plan.txt) and the [Phone Book](dial-plan-phone-book.txt)
 
 There is also a PSTN gateway if interested let me know.
 
