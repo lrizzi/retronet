@@ -6,6 +6,8 @@ Device:     HiPath 3500
                  + 101 => Optipoint Desk
                  + 109 => Rotary Analog
                  + 110 => RAS Analog
+                 + 114 => Dect
+                 + 115 => Dect                                  
                  + 112 => EVM
                  + 113 => EVM
                  + 127 => FAX                 
