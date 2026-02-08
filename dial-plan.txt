@@ -1,9 +1,10 @@
 All the configuration are made with this in mind:
 0039 as Italy dialing code 
 02 as Milan area code
+011 as Turin are code
 XXXX 4 digits subscriber + XXX 3 digits DID 
 
-!!!!! The 0 in the 02 prefix is a significant digit you must dial it !!!!!
+!!!!! The 0 in the 02/011 prefix is a significant digit you must dial it !!!!!
 
 Location: Datacenter MIL1F
 Device:   Cisco 2901 E1 tandem (TLC01MIL1F)
@@ -13,47 +14,32 @@ Serial0/0/0:15   + 2XXX XXX => Routing to Leo's home via icE1usb/line 1
 Serial0/0/1:15   + Routing to 0049 via icE1usb/line 0
 Serial0/1/0:15   + Spare ***** Messagenet *****
 Serial0/1/1:15   + Spare ***** 4000 + 4000XXX => MAX 2000 ***** TBD
-      BRI0/3/0   + 1234 000
-      BRI0/3/1   + 1234 001                 
+      BRI0/3/0   + Spare
+      BRI0/3/1   + Spare                 
 Internal Cisco   + 5000 => FAX to mail
+
+
+Location: Torino
+0039 + 011 + --- +
+                 | 
+         H.323.  + Torino Cisco H.323
+                 + 228 Lab
+                 + 500 Home
 
 Location: Leo's Home
 Device:   Cisco 2801 E1 tandem (TLC01RLS)
-      BRI0/3/0   + 2345 000
-      BRI0/3/1   + 2345 001 
-Serial0/1/0:15   + 2000 XXX => Commander Basic 2 
-Serial0/1/1:15   + .T => Routing to MIL1F via icE1usb/line 0
-Serial0/2/0:15   + 2123 XXX => Test Port
-Serial0/2/1:15   + Disconnected
-Serial0/3/0:15   + Disconnected
-Serial0/3/1:15   + Disconnected
- 
-Location: Leo's Home
-Device:   Commander Basic 2 
-0039 + 02 + 2000 +
-                 |
-   S0 Slot A/5   + 222 => Phone 
-           A/6   + 223 => Elsa 1100 Office
-           A/7   + 224 => Zyxel 202H
-           A/8   + 225 / 226 / 227 => Gigaset Base
-                 |
-  a/b Slot E/1   + 231 => GeoPort
-           E/2   + 232 => 56k USR Modem
-           E/3   + 233 => Thinkpad
-           E/4   + 234 => Rotary Analog
-           E/5   + 235 => Rotary Analog
-           E/6   + 236 => USB 56k Modem Raspberry 
-           E/7   + 237 => 
-           E/8   + 238 => 
+0039 + 02 + 200X +
+      BRI0/0/0   + 2001 XXX => HiPath 3500
+      BRI0/0/1   + 2001 XXX => HiPath 3500
+      BRI0/1/0   + 2003 XXX => Avaya G340 
+      BRI0/1/1   + 2003 XXX => Avaya G340
+      BRI0/2/0   + Spare
+      BRI0/2/1   + Spare
+Serial0/3/0:15   + .T => Routing to MIL1F via icE1usb/line 0
+Serial0/3/1:15   + 4000 XXX => Max 4000
+                                                                 
 
 Location: Datacenter MI
-Device: Asterisk (connected via SIP TLC01MIL1F)
-0039 + 02 + 6 + 
-              + 000 Time Italian
-              + 001 Time English
-              + 002 Your caller ID Number
-              + 003 Your caller ID Name
-              + 004 Milliwatt
-
-0039 + 02 + 6100 + XXX => Local Asterisk SIP Extensions
-
+Device: Asterisk (connected via H.323 TLC01MIL1F)
+0039 + 02 + 60XX  => Local Asterisk Services
+0039 + 02 + 61XX  => Local Asterisk SIP Extensions

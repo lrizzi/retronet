@@ -1,0 +1,41 @@
+Location: Leo's Home
+Device:     HiPath 3500 
+0039 + 02 + 2001 +
+                 |
+                 + 100 => Optiset Desk
+                 + 101 => Optipoint Desk
+                 + 109 => Rotary Analog
+                 + 110 => RAS Analog
+                 + 112 => EVM
+                 + 113 => EVM
+                 + 127 => FAX                 
+                 + 129 => Rotary Analog
+                 + 135 => RAS ISDN
+
+Device:     Avaya CM / G340 
+0039 + 02 + 2003 +
+                 |
+                 + 221 => H.323 Netmeeting
+                 + 222 => H.323 9611 Studio
+                 + 223 => H.323 Netmeeting
+                 + 224 => H.323 9630
+                 + 225 => H.323 9620 Office
+                 + 226 => H.323 9608
+                 + 227 => H.323                 
+                 + 228 => H.323 
+                 + 251 => ISDN
+                 + 252 => ISDN
+                 + 253 => ISDN
+                 + 254 => ISDN                                                                    
+
+Location: Datacenter MI
+Device: Asterisk (connected via SIP TLC01MIL1F)
+0039 + 02 + 60   + 
+                 + 00 Time Italian
+                 + 01 Time English
+                 + 02 Your caller ID Number
+                 + 03 Your caller ID Name
+                 + 04 Milliwatt
+
+0039 + 02 + 61XX  => Local Asterisk SIP Extensions
+
