@@ -32,6 +32,8 @@ subgraph cluster1 {
 
   fom01mil1f [shape=record,label="<host>tdm01mil1f\nE1D|<fiber>Fiber|<e1coax>E1 Coax|<e1db15>E1 DB15"];
 
+  cx01mil1f [shape=record,label="<host>cx01mil1f|<clk>Clock BITS"];
+
 }
 
 subgraph cluster2 {
@@ -117,6 +119,7 @@ fom01mil1f:fiber -- fom01mil1b1:fiber [color=violet]
 tlc01mil1f:s000 -- tdm01mil1f:e1
 tlc01mil1f:s001 -- tdm01mil1f:e0
 tlc01mil1f:s010 -- fom01mil1f:e1coax
+tlc01mil1f:s021 -- cx01mil1f:clk 
 
 //Moved to RLS
 //cisco02rls:s000 -- tdm01mil1f:e1
@@ -139,11 +142,11 @@ tlc01mil1f:s010 -- fom01mil1f:e1coax
 //tdm01mil1:e1 -- compt01mil1:e1 
 //compt01mil1:s01 -- r01mil1 [color=orange]
 //compt01mil1:s02 -- patton01mil1 [color=orange]
-tlc01mil1f:host -- rlt01mil1 [color=olivedrab]
-tlc01mil1f:host -- rlt02mil1 [color=olivedrab]
+tlc01mil1f:host -- rlt01mil1 [color=olivedrab label="H.323"]
+tlc01mil1f:host -- rlt02mil1 [color=olivedrab label="H.323"]
 //avaya01rls:lan1 -- rlt02mil1 [color=olivedrab]
-rlt01mil1 -- cnet [color=olivedrab]
-rlt01mil1 -- pstn [color=olivedrab]
+rlt01mil1 -- cnet [color=olivedrab label="IAX"]
+rlt01mil1 -- pstn [color=olivedrab label="SIP"]
 //rlt01mil1 -- rlt02mil1 [color=olivedrab]
 
 
@@ -153,7 +156,7 @@ tdm01rls:e0 -- cisco01rls:s030
 //cisco01rls:s011 -- compt01rls:e1
 cisco01rls:s031 -- max01rls
 
-avaya02rls:"lan10_3" -- rlt01mil1 [color=olivedrab]
+avaya02rls:"lan10_3" -- rlt01mil1 [color=olivedrab label="H.323"]
 avaya02rls:"lan10_3" -- h323rls [color=green]
 
 avaya02rls:v201 -- cisco01rls:bri010 [color=orange]
